@@ -62,15 +62,25 @@ void		algo(t_swap *swap)
 {
 	make_value_b(swap, swap->val_b, swap->val_b_last);
 	if (is_pa(swap))
+	{
 		pa(swap);
+		swap->line = ft_strncpy(swap->line, "pa", 3);
+	}
 	else if (is_pb(swap))
+	{
 		pb(swap);
+		swap->line = ft_strncpy(swap->line, "pb", 3);
+	}
 	else if (is_ss(swap))
+	{
 		ss(swap);
+		swap->line = ft_strncpy(swap->line, "ss", 3);
+	}
 	else if (is_sa(swap))
+	{
 		sa(swap);
-	else if (is_sb(swap))
-		sb(swap);
+		swap->line = ft_strncpy(swap->line, "sa", 3);
+	}
 	else
 		is_rr(swap, swap->val_b, 0, 0);
 }

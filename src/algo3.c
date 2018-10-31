@@ -13,13 +13,25 @@ static void			is_rrr2(t_swap *swap, t_val *element, int check, int mid)
 	if (mid == 0)
 		check += 10;
 	if (check == 15)
+	{
 		rrr(swap);
+		swap->line = ft_strncpy(swap->line, "rrr", 3);
+	}
 	else if (check == 10)
+	{
 		rra(swap);
+		swap->line = ft_strncpy(swap->line, "rra", 3);
+	}
 	else if (check == 5)
+	{
 		rrb(swap);
+		swap->line = ft_strncpy(swap->line, "rrb", 3);
+	}
 	else
+	{
 		rrr(swap);
+		swap->line = ft_strncpy(swap->line, "rrr", 3);
+	}
 }
 
 static void			is_rrr(t_swap *swap, t_val *element, int check, int i)
@@ -58,11 +70,20 @@ static void			is_rr2(t_swap *swap, t_val *element, int check, int mid)
 	if (mid == 0)
 		check += 10;
 	if (check == 15)
+	{
 		rr(swap);
+		swap->line = ft_strncpy(swap->line, "rr", 3);
+	}
 	else if (check == 10)
+	{
 		ra(swap);
+		swap->line = ft_strncpy(swap->line, "ra", 3);
+	}
 	else if (check == 5)
+	{
 		rb(swap);
+		swap->line = ft_strncpy(swap->line, "rb", 3);
+	}
 	else
 		is_rrr(swap, swap->val_b, 0, 0);
 }
@@ -71,6 +92,11 @@ void			is_rr(t_swap *swap, t_val *element, int check, int i)
 {
 	int		mid;
 
+	if (is_sb(swap))
+	{
+		sb(swap);
+		swap->line = ft_strncpy(swap->line, "sb", 3);
+	}
 	while (element)
 	{
 		i++;

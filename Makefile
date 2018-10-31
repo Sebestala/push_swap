@@ -14,22 +14,36 @@ DLIB = libft/
 DSRC = src/
 
 SRC = 		main_checker.c\
+			visu.c
+
+SRC2 =		main_push_swap.c\
+			algo1.c\
+			algo2.c\
+			algo3.c\
+			visu_ps.c
+
+
+SRC3 = 		check.c\
 			pp.c\
 			rr.c\
 			rrr.c\
 			ss.c\
-			radix.c\
-			visu.c\
-			algo1.c\
-			algo2.c\
-			algo3.c
+			radix.c
 
 OBJ = $(addprefix $(DSRC), $(SRC:.c=.o))
 
-all: $(NAME_CHECKER)
+OBJ2 = $(addprefix $(DSRC), $(SRC2:.c=.o))
 
-$(NAME_CHECKER) : $(LIB) $(OBJ)
-	@$(CC) $(OBJ) $(DLIB)$(LIB) -lncurses -o $@
+OBJ3 = $(addprefix $(DSRC), $(SRC3:.c=.o))
+
+all: $(NAME_CHECKER) $(NAME_PUSH_SWAP)
+
+$(NAME_CHECKER) : $(LIB) $(OBJ) $(OBJ3)
+	@$(CC) $(OBJ) $(OBJ3) $(DLIB)$(LIB) -lncurses -o $@
+
+$(NAME_PUSH_SWAP) : $(LIB) $(OBJ2) $(OBJ3)
+	@echo "creation de $@ \033[32m ok \033[0m"
+	@$(CC) $(OBJ2) $(OBJ3) $(DLIB)$(LIB) -lncurses -o $@
 
 $(DSRC)%.o : $(DSRC)%.c includes/$(NAME_CHECKER).h
 	@echo "compilation de $< \033[32m ok \033[0m"
@@ -41,10 +55,12 @@ $(LIB) :
 clean :
 	@make -C $(DLIB) clean
 	@rm -r $(OBJ)
+	@rm -r $(OBJ2)
+	@rm -r $(OBJ3)
 
 fclean : clean
 	@make -C $(DLIB) fclean
 	@rm -r $(NAME_CHECKER)
-	@rm -r $(NAME_CHECKER).a
+	@rm -r $(NAME_PUSH_SWAP)
 
 re : fclean all

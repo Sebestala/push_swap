@@ -102,5 +102,9 @@ void				make_value_b(t_swap *swap, t_val *vb, t_val *vlb);
 int					is_sb(t_swap *swap);
 void				is_rr(t_swap *swap, t_val *element, int check, int i);
 void				command(t_swap *swap);
+void				check_val(t_swap *swap, t_val *val, int j, int i);
+void				make_val_list(t_swap *swap, int nb);
+void				make_tab_list(t_swap *swap, int ac, char **av);
+void				check_list_int(t_swap *swap, int ac, char **av, int i);
 
 #endif

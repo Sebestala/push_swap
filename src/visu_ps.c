@@ -30,7 +30,8 @@ static void		color_the_deep(t_swap *swap)
 		printw("%s", str);
 		y++;
 	}
-	mvprintw(swap->axe_x - 3, 60, "Write 'esc' for valid and escape.");
+	mvprintw(swap->axe_x - 3, 60, "Touch 'esc' for escape.");
+	mvprintw(swap->axe_x - 3, 150, "Speed : 20/20");
 }
 
 static WINDOW	*init_win_player(t_swap *swap, WINDOW *player, int check, int i)
@@ -95,9 +96,8 @@ void			init_windows(t_swap *swap)
 	getch();
 	swap->instruction = init_win_instruction(swap->instruction, swap);
 	getch();
-	mvprintw(swap->axe_x - 3, 105, "Move : %4d", swap->nb_move);
-	getch();
 }
+
 
 void		esc_visu(t_swap *swap, int i)
 {
@@ -116,16 +116,13 @@ void		esc_visu(t_swap *swap, int i)
 		exit(0);
 }
 
+
 static void		print_instruction(t_swap *swap, WINDOW *instruction)
 {
 	char	str[30];
 	int		i;
 
-	echo();
-	curs_set(TRUE);
-	mvwgetnstr(instruction, 0, 46, str, 3);
-	curs_set(FALSE);
-	noecho();
+	mvwprintw(instruction, 0, 46, "%3s", swap->line);
 	i = 0;
 	wmove(instruction, 0, 0);
 	while (i < 4)
@@ -135,6 +132,22 @@ static void		print_instruction(t_swap *swap, WINDOW *instruction)
 	}
 	mvwprintw(instruction, 0, 45, "     ");
 	swap->line = ft_strdup(str);
+}
+
+void		visu_pause(t_swap *swap)
+{
+	int		c;
+
+	mvprintw(swap->axe_x - 3, 120, "\tPAUSE");
+	while (1)
+	{
+		c = getch();
+		if (c == 32 || c == '=')
+			break ;
+		if (c == 27)
+			esc_visu(swap, 0);
+	}
+	mvprintw(swap->axe_x - 3, 120, "\t     ");
 }
 
 void		print_player2(t_swap *swap, int j, int k)
@@ -212,10 +225,29 @@ void		print_player(t_swap *swap, int i, int j, int k)
 
 void			print_visu(t_swap *swap)
 {
+	int		j;
+	int		c;
+
+	j = 1;
 	print_player(swap, 0, 0, 0);
 	print_instruction(swap, swap->instruction);
-	command(swap);
 	swap->nb_move++;
 	mvprintw(swap->axe_x - 3, 105, "Move : %4d", swap->nb_move);
-	getch();
+	c = getch();
+	if (c == 27)
+		esc_visu(swap, 0);
+	else if (c == '-' || c == '+')
+	{
+		if (c == '+' && swap->speed > 1)
+			swap->speed -= 1000000;
+		else if (c == '-' && swap->speed < 19000001)
+			swap->speed += 1000000;
+		mvprintw(swap->axe_x - 3, 150, "Speed : %02d/20"
+		, 20 - (swap->speed / 1000000));
+	}
+	else if (c == 32 || c == '=')
+		visu_pause(swap);
+	j = 1;
+	while (j < swap->speed)
+		j++;
 }
