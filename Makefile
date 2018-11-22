@@ -17,10 +17,10 @@ SRC = 		main_checker.c\
 			visu.c
 
 SRC2 =		main_push_swap.c\
-			algo1.c\
-			algo2.c\
-			algo3.c\
-			visu_ps.c
+			visu_ps.c\
+			calc_distance2.c\
+			algo.c\
+			radix2.c
 
 
 SRC3 = 		check.c\
@@ -28,7 +28,11 @@ SRC3 = 		check.c\
 			rr.c\
 			rrr.c\
 			ss.c\
-			radix.c
+			radix.c\
+			visu_both.c\
+			visu_both2.c\
+			calc_distance.c\
+			radix_shared.c
 
 OBJ = $(addprefix $(DSRC), $(SRC:.c=.o))
 

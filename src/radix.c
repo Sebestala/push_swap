@@ -1,7 +1,7 @@
 
 #include "../includes/push_swap.h"
 
-void		radix_merge(t_tab *tab1, t_tab *tab2, t_swap *swap)
+static void		radix_merge(t_tab *tab1, t_tab *tab2, t_swap *swap, char c)
 {
 //printf("radix_merge\n");
 //fflush(stdout);
@@ -17,84 +17,15 @@ void		radix_merge(t_tab *tab1, t_tab *tab2, t_swap *swap)
 		tab1->tab[0] = element;
 		val = tab1->tab[0];
 	}
-	swap->sort_final = tab2->tab[0];
-}
-
-void		radix_put_val_at_end_of_list(t_val *val, void **tab, int nb)
-{
-//printf("radix_put_val_at_end_of_list NB = %d\n", nb);
-//fflush(stdout);
-	t_val	*element;
-
-	if (nb < 0)
-		nb = -nb;
-	element = tab[nb];
-	if (!element)
-		tab[nb] = val;
+	if (c == 'a')
+		swap->sort_final_a = tab2->tab[0];
 	else
-	{
-		while (element->radix_next != NULL)
-			element = element->radix_next;
-		element->radix_next = val;
-	}
+		swap->sort_final_b = tab2->tab[0];
+	element = tab2->tab[0];
+	element->radix_back = NULL;
 }
 
-void		radix_sort_algo2(t_tab *tab1, t_tab *tab2, int nb1, int nb2)
-{
-//printf("radix_sort_algo2\n");
-//fflush(stdout);
-	t_val	*val;
-	t_val	*element;
-	int		i;
-	int		res;
-
-	i = 0;
-	while (i < 10)
-	{
-		val = tab1->tab[i];
-		while (val)
-		{
-			res = (val->val % nb1) / nb2;
-//printf(" val = %d  res = %d   nb1 = %d     nb2 = %d\n", val->val, res, nb1, nb2);
-//fflush(stdout);
-			element = val->radix_next;
-			radix_put_val_at_end_of_list(val, tab2->tab, res);
-			val->radix_next = NULL;
-			tab1->tab[i] = element;
-			val = tab1->tab[i];
-		}
-		i++;
-	}
-//printf("\n");
-//fflush(stdout);
-	tab1->check = 0;
-	tab2->check = 1;
-}
-
-void		radix_sort_algo(t_tab *tab1, t_tab *tab2, int size)
-{
-//printf("radix_sort_algo\n");
-//fflush(stdout);
-	int		nb1;
-	int		nb2;
-	int		i;
-
-	nb1 = 10;
-	nb2 = 1;
-	i = 0;
-	while (i <= size)
-	{
-		if (tab1->check == 1)
-			radix_sort_algo2(tab1, tab2, nb1, nb2);
-		else
-			radix_sort_algo2(tab2, tab1, nb1, nb2);
-		nb1 *= 10;
-		nb2 *= 10;
-		i++;
-	}
-}
-
-void		radix_init(t_swap *swap)
+static void		radix_init(t_swap *swap)
 {
 //printf("radix_init\n");
 //fflush(stdout);
@@ -106,44 +37,112 @@ void		radix_init(t_swap *swap)
 	swap->tab_pos1->check = 1;
 }
 
-void		radix_sort_pos_and_neg(t_swap *swap)
+static void		radix_sort_pos_and_neg(t_swap *swap, char c)
 {
 //printf("radix_sort_pos_and_neg\n");
 //fflush(stdout);
 	t_val	*val;
 
-	val = swap->val_a;
+	if (c == 'a')
+		val = swap->val_a;
+	else
+		val = swap->val_b;
 	while (val)
 	{
 //printf(" val = %d \n", val->val);
 //fflush(stdout);
 		if (val->val < 0)
-			radix_put_val_at_end_of_list(val, swap->tab_neg1->tab, val->val % 10);
+			radix_put_val_at_end_list(val, swap->tab_neg1->tab, val->val % 10);
 		else
-			radix_put_val_at_end_of_list(val, swap->tab_pos1->tab, val->val % 10);
+			radix_put_val_at_end_list(val, swap->tab_pos1->tab, val->val % 10);
 		val = val->next;
 	}
 }
 
-void		radix(t_swap *swap)
+static void		make_pos_final2(t_swap *swap, char c, t_val *elem)
 {
-//printf("radix\n");
-//fflush(stdout);
+	t_val	*elem2;
 	int		i;
+
+	i = 1;
+	elem->pos_final = i;
+printf("val = %d  back = %p  next = %p \n", elem->val, elem->radix_back, elem->next);
+	while (elem->radix_back)
+	{
+		elem2 = elem;
+		elem->radix_next = elem->radix_back;
+		elem = elem->radix_next;
+		elem->radix_back = elem2;
+		i++;
+		elem->pos_final = i;
+	}
+}
+
+static void		make_pos_final(t_swap *swap, char c)
+{
+	t_val	*elem;
+	t_val	*elem2;
+	int		i;
+
+	i = 1;
+printf("C = %c\n", c);
+/*	if (c == 'b')
+printf("val = %d  back = %p  next = %p \n", swap->val_b->val, swap->val_b->radix_back, swap->val_b->radix_next);
+*/	if (c == 'b')
+		elem = swap->sort_final_b;
+	else
+		elem = swap->sort_final_a;
+	elem->pos_final = i;
+printf("val = %d  back = %p  next = %p  val_next = %d \n", elem->val, elem->radix_back, elem->radix_next, elem->radix_next->val);
+	while (elem->radix_next != NULL)
+	{
+//printf("A\n");
+//fflush(stdout)
+if (c == 'a')
+printf("A : val = %d \n", elem->val);
+if (c == 'b')
+printf("B : val = %d \n", elem->val);
+		elem2 = elem;
+		elem = elem->radix_next;
+//printf("elem = %p   elem2 = %p  val = %d\n", elem, elem2, elem->val);
+//fflush(stdout);
+//printf("B\n");
+//fflush(stdout);
+		elem->radix_back = elem2;
+//printf("C\n");
+//fflush(stdout);
+		i++;
+		elem->pos_final = i;
+	}
+/*	if (c == 'b')
+printf("val = %d  back = %p  next = %p val_final = %d \n", swap->val_b->val, swap->val_b->radix_back, swap->val_b->radix_next, swap->sort_final_b->val);
+printf("val = %d  back = %p  next = %p \n", elem->val, elem->radix_back, elem->next);
+*/	if (c == 'b')
+		make_pos_final2(swap, c, elem);
+}
+
+void		radix(t_swap *swap, char c)
+{
+printf("radix\n");
+fflush(stdout);
+	int		i;
+	int		nb;
 
 	i = 0;
 	radix_init(swap);
-	radix_sort_pos_and_neg(swap);
-	while (swap->smallest != 0)
+	radix_sort_pos_and_neg(swap, c);
+	nb = swap->smallest;
+	while (nb != 0)
 	{
-		swap->smallest /= 10;
+		nb /= 10;
 		i++;
 	}
 	radix_sort_algo(swap->tab_neg1, swap->tab_neg2, i);
 	i = 0;
-	while (swap->biggest > 0)
+	nb = swap->biggest;
+	while (nb > 0)
 	{
-		swap->biggest /= 10;
+		nb /= 10;
 		i++;
 	}
 	radix_sort_algo(swap->tab_pos1, swap->tab_pos2, i);
@@ -152,11 +151,12 @@ void		radix(t_swap *swap)
 	else
 		i = 0;
 	if (swap->tab_pos1->check == 1 && i == 1)
-		radix_merge(swap->tab_neg1, swap->tab_pos1, swap);
+		radix_merge(swap->tab_neg1, swap->tab_pos1, swap, c);
 	else if (swap->tab_pos2->check == 1 && i == 1)
-		radix_merge(swap->tab_neg1, swap->tab_pos2, swap);
+		radix_merge(swap->tab_neg1, swap->tab_pos2, swap, c);
 	else if (swap->tab_pos1->check == 1 && i == 0)
-		radix_merge(swap->tab_neg2, swap->tab_pos1, swap);
+		radix_merge(swap->tab_neg2, swap->tab_pos1, swap, c);
 	else if (swap->tab_pos2->check == 1 && i == 0)
-		radix_merge(swap->tab_neg2, swap->tab_pos2, swap);
+		radix_merge(swap->tab_neg2, swap->tab_pos2, swap, c);
+	make_pos_final(swap, c);
 }

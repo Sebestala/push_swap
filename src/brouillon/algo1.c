@@ -1,24 +1,16 @@
 
 #include "../includes/push_swap.h"
 
-int			absolue(int nb)
-{
-	if (nb < 0)
-		return (-nb);
-	else
-		return (nb);
-}
-
 static void		make_value_a2(t_swap *swap, t_val *va)
 {
 	if (va->next)
 	{
 		swap->a1 = va->next->pos_final;
-		swap->xa1 = va->next->pos_final + 10;
+		swap->xa1 = (va->next->pos_final + 10) % swap->nb_numb;
 		if (va->next->next)
 		{
 			swap->a2 = va->next->next->pos_final;
-			swap->xa2 = va->next->next->pos_final + 10;
+			swap->xa2 = (va->next->next->pos_final + 10) % swap->nb_numb;
 		}
 		else
 		{
@@ -60,11 +52,11 @@ static void		make_value_a(t_swap *swap, t_val *va, t_val *vla)
 static void		make_value_b2(t_swap *swap, t_val *vb)
 {
 	swap->b1 = vb->next->pos_final;
-	swap->xb1 = vb->next->pos_final + 10;
+	swap->xb1 = (vb->next->pos_final + 10) % swap->nb_numb;
 	if (vb->next->next)
 	{
 		swap->b2 = vb->next->next->pos_final;
-		swap->xb2 = vb->next->next->pos_final + 10;
+		swap->xb2 = (vb->next->next->pos_final + 10) % swap->nb_numb;
 	}
 	else
 	{

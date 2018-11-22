@@ -16,8 +16,7 @@
 # define COLOR_GREY_LIGHT		237
 # define COLOR_PILE_1			 24
 # define COLOR_PILE_2			208
-# define COLOR_GREEN1			10   // 106
-//# define COLOR_PLAYER_4			88
+# define COLOR_GREEN1			10
 # define COLOR_WIN_1			10
 # define COLOR_WIN_2			11
 # define COLOR_GOOD_PLACE		12
@@ -27,9 +26,11 @@ typedef	struct		s_val
 {
 	int				val;
 	int				pos_final;
+	int				pos_current;
 	struct s_val	*back;
 	struct s_val	*next;
 	struct s_val	*radix_next;
+	struct s_val	*radix_back;
 }					t_val;
 
 typedef	struct		s_tab
@@ -49,10 +50,35 @@ typedef	struct		s_swap
 	t_tab			*tab_pos2;
 	t_val			*val_a;
 	t_val			*val_a_last;
+	t_val			*sort_final_a;
 	t_val			*val_b;
 	t_val			*val_b_last;
-	t_val			*sort_final;
+	t_val			*sort_final_b;
+	t_val			*val_a2;
+	t_val			*val_a_last2;
+	t_val			*sort_final_a2;//element le plus petit de a
+	t_val			*val_b2;
+	t_val			*val_b_last2;
+	t_val			*sort_final_b2;//element le plus petit de b
+	int				*tab_distance_a;
+	int				total_distance_a;
+	int				*tab_distance_b;
+	int				total_distance_b;
+	int				*tab_distance_a2;
+	int				total_distance_a2;
+	int				*tab_distance_b2;
+	int				total_distance_b2;
+	int				mid_a;
+	int				mid_b;
+	int				length_a;
+	int				length_b;
+	int				min_b;
+	int				max_b;
+
 	char			*line;
+	int				check_part;
+	int				last_b;
+	int				first_b;
 	int				nb_move;
 	int				axe_x;
 	int				axe_y;
@@ -61,7 +87,7 @@ typedef	struct		s_swap
 	int				nb_numb;
 	int				speed;
 	int				check_visu;
-	int				a8;
+/*	int				a8;
 	int				a9;
 	int				a0;
 	int				a1;
@@ -79,6 +105,7 @@ typedef	struct		s_swap
 	int				xb0;
 	int				xb1;
 	int				xb2;
+*/	int				c;
 }					t_swap;
 
 void				pa(t_swap *swap);
@@ -92,10 +119,23 @@ void				rr(t_swap *swap);
 void				rra(t_swap *swap);
 void				rrb(t_swap *swap);
 void				rrr(t_swap *swap);
-void				radix(t_swap *swap);
+void				pa2(t_swap *swap);
+void				pb2(t_swap *swap);
+void				sa2(t_swap *swap);
+void				sb2(t_swap *swap);
+void				ss2(t_swap *swap);
+void				ra2(t_swap *swap);
+void				rb2(t_swap *swap);
+void				rr2(t_swap *swap);
+void				rra2(t_swap *swap);
+void				rrb2(t_swap *swap);
+void				rrr2(t_swap *swap);
+void				radix(t_swap *swap, char c);
 void				print_visu(t_swap *swap);
+void				print_visu_ps(t_swap *swap);
 void				esc_visu(t_swap *swap, int i);
 void				init_windows(t_swap *swap);
+void				init_windows_ps(t_swap *swap);
 void				algo(t_swap *swap);
 int					absolue(int nb);
 void				make_value_b(t_swap *swap, t_val *vb, t_val *vlb);
@@ -106,5 +146,21 @@ void				check_val(t_swap *swap, t_val *val, int j, int i);
 void				make_val_list(t_swap *swap, int nb);
 void				make_tab_list(t_swap *swap, int ac, char **av);
 void				check_list_int(t_swap *swap, int ac, char **av, int i);
+void				print_player(t_swap *swap, int i, int j, int k);
+WINDOW				*init_win_instruction(WINDOW *instruction, t_swap *swap);
+WINDOW				*init_win_player(t_swap *swap, WINDOW *player, int check, 
+int i);
+void				init_visu(void);
+void				color_the_deep(t_swap *swap);
+void				algo_part1(t_swap *swap);
+void				algo_part2(t_swap *swap);
+void				radix_sort_algo(t_tab *tab1, t_tab *tab2, int size);
+void				radix_put_val_at_end_list(t_val *val, void **tab, int nb);
+void				radix2(t_swap *swap, char c);
+void				calc_tab_distance_b1(t_swap *swap, int i);
+void				calc_tab_distance_a1(t_swap *swap, int i);
+void				calc_tab_distance_b1_2(t_swap *swap, int i);
+void				calc_tab_distance_a1_2(t_swap *swap, int i);
+void				init_list_copy(t_swap *swap);
 
 #endif

@@ -76,8 +76,8 @@ int		main(int ac, char **av)
 		return (0);
 	swap = memalloc_sterr(sizeof(t_swap), "main");
 	make_tab_list(swap, ac, av);
-	radix(swap);
-	check_val(swap, swap->sort_final, 0, 0);
+	radix(swap, 'a');
+	check_val(swap, swap->sort_final_a, 0, 0);
 	if (swap->check_visu == 1)
 		init_windows(swap);
 	while (swap->check_visu == 0 && (i = get_next_line(0, &swap->line)))

@@ -1,6 +1,14 @@
 
 #include "../includes/push_swap.h"
 
+int			absolue(int nb)
+{
+	if (nb < 0)
+		return (-nb);
+	else
+		return (nb);
+}
+
 void	make_val_list(t_swap *swap, int nb)
 {
 	t_val	*val;
@@ -83,4 +91,10 @@ void	check_val(t_swap *swap, t_val *val, int j, int i)
 			exit_str("Error : two number too are identical");
 	}
 	swap->nb_numb = j;
+//printf("numb1 = %d TOTAL = %ld  \n", swap->nb_numb, sizeof(int) * j);
+	j++;
+	swap->tab_distance_a = memalloc_sterr(sizeof(int) * j, "check_val   code1");
+	swap->tab_distance_b = memalloc_sterr(sizeof(int) * j, "check_val   code2");
+	swap->tab_distance_a2 = memalloc_sterr(sizeof(int) * j, "check_val  code3");
+	swap->tab_distance_b2 = memalloc_sterr(sizeof(int) * j, "check_val  code4");
 }
