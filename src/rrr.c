@@ -15,6 +15,7 @@ void		rra2(t_swap *swap)
 		swap->val_a_last2 = element1;
 		swap->val_a2->back = NULL;
 	}
+	swap->check_act2 = RRA;
 }
 
 void		rra(t_swap *swap)
@@ -31,6 +32,7 @@ void		rra(t_swap *swap)
 		swap->val_a_last = element1;
 		swap->val_a->back = NULL;
 	}
+	swap->check_act = RRA;
 	rra2(swap);
 }
 
@@ -40,14 +42,16 @@ void		rrb2(t_swap *swap)
 
 	if (swap->val_b2)
 	{
+//printf("TEST1  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
 		swap->val_b2->back = swap->val_b_last2;
 		swap->val_b_last2->next = swap->val_b2;
 		element1 = swap->val_b_last2->back;
 		element1->next = NULL;
-		swap->val_b = swap->val_b_last2;
+		swap->val_b2 = swap->val_b_last2;
 		swap->val_b_last2 = element1;
 		swap->val_b2->back = NULL;
 	}
+	swap->check_act2 = RRB;
 }
 
 void		rrb(t_swap *swap)
@@ -64,17 +68,20 @@ void		rrb(t_swap *swap)
 		swap->val_b_last = element1;
 		swap->val_b->back = NULL;
 	}
+	swap->check_act = RRB;
 	rrb2(swap);
-}
-
-void		rrr(t_swap *swap)
-{
-	rra(swap);
-	rrb(swap);
 }
 
 void		rrr2(t_swap *swap)
 {
 	rra2(swap);
 	rrb2(swap);
+	swap->check_act2 = RRR;
+}
+
+void		rrr(t_swap *swap)
+{
+	rra(swap);
+	rrb(swap);
+	swap->check_act = RRR;
 }

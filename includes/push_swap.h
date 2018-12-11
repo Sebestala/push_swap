@@ -5,6 +5,17 @@
 # include "../libft/src/ft_printf/include/ft_printf.h"
 # include <curses.h>
 
+# define PA 1
+# define PB 2
+# define SA 3
+# define SB 4
+# define SS 5
+# define RA 6
+# define RB 7
+# define RR 8
+# define RRB 9
+# define RRA 10
+# define RRR 11
 # define TEN 10
 # define COLOR_DEEP				1
 # define COLOR_STATS			3
@@ -26,6 +37,7 @@ typedef	struct		s_val
 {
 	int				val;
 	int				pos_final;
+	int				pos_final_sort;
 	int				pos_current;
 	struct s_val	*back;
 	struct s_val	*next;
@@ -50,7 +62,7 @@ typedef	struct		s_swap
 	t_tab			*tab_pos2;
 	t_val			*val_a;
 	t_val			*val_a_last;
-	t_val			*sort_final_a;
+	t_val			*sort_final_a;// début de la chaine trié par radix
 	t_val			*val_b;
 	t_val			*val_b_last;
 	t_val			*sort_final_b;
@@ -72,11 +84,25 @@ typedef	struct		s_swap
 	int				mid_b;
 	int				length_a;
 	int				length_b;
-	int				min_b;
-	int				max_b;
+
+	int				point_next;
+	int				point_back;
+	int				length_a2;
+	int				length_b2;
+	int				mid_a2;
+	int				mid_b2;
+	int				ra;
+	int				rb;
+	int				rr;
+	int				rra;
+	int				rrb;
+	int				rrr;
+	int				res1;
+	int				a;
+	int				b;
+	int				is_sort;
 
 	char			*line;
-	int				check_part;
 	int				last_b;
 	int				first_b;
 	int				nb_move;
@@ -86,26 +112,14 @@ typedef	struct		s_swap
 	int				smallest;
 	int				nb_numb;
 	int				speed;
+	int				check_part;
 	int				check_visu;
-/*	int				a8;
-	int				a9;
-	int				a0;
-	int				a1;
-	int				a2;
-	int				b9;
-	int				b0;
-	int				b1;
-	int				b2;
-	int				xa8;
-	int				xa9;
-	int				xa0;
-	int				xa1;
-	int				xa2;
-	int				xb9;
-	int				xb0;
-	int				xb1;
-	int				xb2;
-*/	int				c;
+	int				check_move;
+	int				check_speed;
+	int				check_act;
+	int				check_act2;
+	int				c;
+	int		test;
 }					t_swap;
 
 void				pa(t_swap *swap);
@@ -128,6 +142,7 @@ void				ra2(t_swap *swap);
 void				rb2(t_swap *swap);
 void				rr2(t_swap *swap);
 void				rra2(t_swap *swap);
+int			test_pile(t_val *val);
 void				rrb2(t_swap *swap);
 void				rrr2(t_swap *swap);
 void				radix(t_swap *swap, char c);
@@ -148,7 +163,7 @@ void				make_tab_list(t_swap *swap, int ac, char **av);
 void				check_list_int(t_swap *swap, int ac, char **av, int i);
 void				print_player(t_swap *swap, int i, int j, int k);
 WINDOW				*init_win_instruction(WINDOW *instruction, t_swap *swap);
-WINDOW				*init_win_player(t_swap *swap, WINDOW *player, int check, 
+WINDOW				*init_win_player(t_swap *swap, WINDOW *player, int check,
 int i);
 void				init_visu(void);
 void				color_the_deep(t_swap *swap);
@@ -157,10 +172,27 @@ void				algo_part2(t_swap *swap);
 void				radix_sort_algo(t_tab *tab1, t_tab *tab2, int size);
 void				radix_put_val_at_end_list(t_val *val, void **tab, int nb);
 void				radix2(t_swap *swap, char c);
-void				calc_tab_distance_b1(t_swap *swap, int i);
-void				calc_tab_distance_a1(t_swap *swap, int i);
-void				calc_tab_distance_b1_2(t_swap *swap, int i);
-void				calc_tab_distance_a1_2(t_swap *swap, int i);
+void				calc_tab_distance_b1(t_swap *swap, int i, int check);
+void				calc_tab_distance_a1(t_swap *swap, int i, int check);
+void				calc_tab_distance_b1_2(t_swap *swap, int i, int check);
+void				calc_tab_distance_a1_2(t_swap *swap, int i, int check);
 void				init_list_copy(t_swap *swap);
+void				radix_init(t_swap *swap);
+void				radix_zero(t_swap *swap);
+void				test_radix(t_swap *swap, int nb, char c);
+int					test_pile2(t_val *first, t_val *begin);
+int					is_pa2(t_swap *swap);
+int					is_pb2(t_swap *swap);
+int					is_ss2(t_swap *swap);
+void				do_ss(t_val *val, int *tab, int len, t_swap *swap);
+void				is_radix2(t_swap *swap);
+int					is_rrb2(t_swap *swap);
+int					is_rb2(t_swap *swap);
+int					is_pa(t_swap *swap);
+int					is_rrb(t_swap *swap);
+int					is_rb(t_swap *swap);
+void				algo3(t_swap *swap);
+void				write_clone(t_swap *swap, t_val *elem3);
+void		test_list(t_swap *swap, int nb, char c);
 
 #endif

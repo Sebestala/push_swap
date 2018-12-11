@@ -1,6 +1,41 @@
 
 #include "../includes/push_swap.h"
 
+void		radix_zero(t_swap *swap)
+{
+//printf("radix_init\n");
+//fflush(stdout);
+	int		i;
+
+	i = 0;
+	swap->biggest = 0;
+	swap->smallest = 0;
+	swap->tab_neg1->check = 1;
+	swap->tab_pos1->check = 1;
+	swap->tab_neg2->check = 0;
+	swap->tab_pos2->check = 0;
+	while (i < 10)
+	{
+		swap->tab_neg1->tab[i] = NULL;
+		swap->tab_neg2->tab[i] = NULL;
+		swap->tab_pos1->tab[i] = NULL;
+		swap->tab_pos2->tab[i] = NULL;
+		i++;
+	}
+}
+
+void		radix_init(t_swap *swap)
+{
+//printf("radix_init\n");
+//fflush(stdout);
+	swap->tab_neg1 = memalloc_sterr(sizeof(t_tab), "radix   code : 1");
+	swap->tab_neg2 = memalloc_sterr(sizeof(t_tab), "radix   code : 2");
+	swap->tab_pos1 = memalloc_sterr(sizeof(t_tab), "radix   code : 3");
+	swap->tab_pos2 = memalloc_sterr(sizeof(t_tab), "radix   code : 4");
+	swap->tab_neg1->check = 1;
+	swap->tab_pos1->check = 1;
+}
+
 void			radix_put_val_at_end_list(t_val *val, void **tab, int nb)
 {
 //printf("radix_put_val_at_end_of_list NB = %d\n", nb);

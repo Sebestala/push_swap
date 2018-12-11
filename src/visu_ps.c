@@ -24,6 +24,7 @@ void			init_windows_ps(t_swap *swap)
 	mvprintw(swap->axe_x - 3, 75, "Touch 'esc' for escape, '+' and '-' for the speed, 'space' for pause.");
 	mvprintw(swap->axe_x - 3, 150, "Speed : 20/20");
 	mvprintw(swap->axe_x - 3, 58, "Move : %4d", swap->nb_move);
+	refresh();
 	swap->c = getch();
 }
 
@@ -31,7 +32,8 @@ static void		print_instruction(t_swap *swap, WINDOW *instruction)
 {
 	int		i;
 
-	nodelay(stdscr, FALSE);
+	if (swap->check_visu == 1)
+		nodelay(stdscr, FALSE);
 	mvwprintw(instruction, 0, 46, "%s", swap->line);
 	i = 0;
 	wmove(instruction, 0, 0);
@@ -42,6 +44,8 @@ static void		print_instruction(t_swap *swap, WINDOW *instruction)
 	}
 	mvwprintw(instruction, 0, 45, "     ");
 	wrefresh(instruction);
+	mvprintw(swap->axe_x - 3, 58, "Move : %4d", swap->nb_move);
+	refresh();
 	swap->c = getch();
 	nodelay(stdscr, TRUE);
 }
@@ -67,8 +71,6 @@ void			print_visu_ps(t_swap *swap)
 	j = 1;
 	print_player(swap, 0, 0, 0);
 	print_instruction(swap, swap->instruction);
-	mvprintw(swap->axe_x - 3, 58, "Move : %4d", swap->nb_move);
-	refresh();
 	swap->c = getch();
 	if (swap->c == 27)
 		esc_visu(swap, 0);
@@ -85,5 +87,8 @@ void			print_visu_ps(t_swap *swap)
 		visu_pause(swap);
 	j = 1;
 	while (j < swap->speed)
+	{
+		swap->c = getch();
 		j++;
+	}
 }

@@ -59,17 +59,15 @@ void		esc_visu(t_swap *swap, int i)
 		exit(0);
 }
 
-static void		print_player2(t_swap *swap, int j, int k)
+static void		print_player2(t_swap *swap, int j, int k, t_val *val)
 {
-	t_val	*val;
-
-	val = swap->val_b;
 	while (val)
 	{
+		swap->c = getch();
 		j = 0;
 		while (j <= swap->nb_numb)
 		{
-			if (swap->nb_numb - j > val->pos_final)
+			if (swap->nb_numb - j > val->pos_final_sort)
 				mvwprintw(swap->pile2, j, k, " ");
 			else
 				mvwprintw(swap->pile2, j, k, "|");
@@ -80,6 +78,7 @@ static void		print_player2(t_swap *swap, int j, int k)
 	}
 	while (k <= swap->nb_numb)
 	{
+		swap->c = getch();
 		j = 0;
 		while (j <= swap->nb_numb)
 		{
@@ -95,19 +94,19 @@ void			print_player(t_swap *swap, int i, int j, int k)
 {
 	t_val	*val;
 
-	calc_tab_distance_a1(swap, 0);
+//	calc_tab_distance_a1(swap, 0);
 	val = swap->val_a;
 	while (val)
 	{
+		swap->c = getch();
 		j = 0;
-		if (i > 0 || val->pos_final == 1)
-			i++;
-//		if (/*i == val->pos_final ||*/ swap->tab_distance_a[k] == 0)
-		if (val->pos_final == i)
+//		if (i > 0 || val->pos_final == 1)
+//			i++;
+		if (val->pos_final == val->pos_current/*i*/)
 			wattron(swap->pile1, COLOR_PAIR(COLOR_GOOD_PLACE));
 		while (j <= swap->nb_numb)
 		{
-			if (swap->nb_numb - j > val->pos_final)
+			if (swap->nb_numb - j > val->pos_final_sort)
 				mvwprintw(swap->pile1, j, k, " ");
 			else
 				mvwprintw(swap->pile1, j, k, "|");
@@ -119,6 +118,7 @@ void			print_player(t_swap *swap, int i, int j, int k)
 	}
 	while (k <= swap->nb_numb)
 	{
+		swap->c = getch();
 		j = 0;
 		while (j <= swap->nb_numb)
 		{
@@ -127,27 +127,6 @@ void			print_player(t_swap *swap, int i, int j, int k)
 		}
 		k++;
 	}
-	val = swap->val_a;
-	k = 0;
-	while (val->pos_final != 1)
-	{
-		j = 0;
-		i++;
-		if (val->pos_final == i)
-			wattron(swap->pile1, COLOR_PAIR(COLOR_GOOD_PLACE));
-		while (j <= swap->nb_numb)
-		{
-			if (swap->nb_numb - j > val->pos_final)
-				mvwprintw(swap->pile1, j, k, " ");
-			else
-				mvwprintw(swap->pile1, j, k, "|");
-			j++;
-		}
-		wattron(swap->pile1, COLOR_PAIR(COLOR_WIN_1));
-		val = val->next;
-		k++;
-	}
-
 	wrefresh(swap->pile1);
-	print_player2(swap, 0, 0);
+	print_player2(swap, 0, 0, swap->val_b);
 }

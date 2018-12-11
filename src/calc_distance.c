@@ -19,7 +19,7 @@ static void		calc_pos_current(t_val *min, t_val *first)
 			elem = elem->next;
 		}
 		elem = first;
-		while (elem && elem->val != min->val)
+		while (elem && elem != min)
 		{
 			elem->pos_current = i;
 //if (first)
@@ -44,22 +44,18 @@ static void		calc_tab_distance_a2(t_swap *swap, t_val *elem, int *i)
 	}
 }
 
-void			calc_tab_distance_a1(t_swap *swap, int i)
+void			calc_tab_distance_a1(t_swap *swap, int i, int check)
 {
-	t_val	*elem;
-
-	if (swap->val_a)
+	swap->total_distance_a = 0;
+	if (check == 0)
 	{
-		swap->total_distance_a = 0;
-		swap->length_a = swap->nb_numb - swap->length_b;
 		swap->mid_a = swap->length_a / 2;
-		elem = swap->val_a;
 		calc_pos_current(swap->sort_final_a, swap->val_a);
-		calc_tab_distance_a2(swap, elem, &i);
-		while (i < swap->nb_numb)
-			swap->tab_distance_a[i++] = -1;
-//printf("TEST1\n");
 	}
+	calc_tab_distance_a2(swap, swap->val_a, &i);
+	while (i < swap->nb_numb)
+		swap->tab_distance_a[i++] = -1;
+//	test_radix(swap, 1, 'a');
 }
 
 static void		calc_tab_distance_b2(t_swap *swap, t_val *elem, int *i)
@@ -75,28 +71,16 @@ static void		calc_tab_distance_b2(t_swap *swap, t_val *elem, int *i)
 	}
 }
 
-void			calc_tab_distance_b1(t_swap *swap, int i)
+void			calc_tab_distance_b1(t_swap *swap, int i, int check)
 {
-	t_val	*elem;
-
-	swap->length_b = 0;
-	swap->min_b = 99999;
-	swap->max_b = 0;
-	elem = swap->val_b;
 	swap->total_distance_b = 0;
-	while (elem)
+	if (check == 0)
 	{
-		if (elem->pos_final < swap->min_b)
-			swap->min_b = elem->pos_final;
-		if (elem->pos_final > swap->max_b)
-			swap->max_b = elem->pos_final;
-		swap->length_b++;
-		elem = elem->next;
+		swap->mid_b = swap->length_b / 2;
+		calc_pos_current(swap->sort_final_b, swap->val_b);
 	}
-	swap->mid_b = swap->length_b / 2;
-	elem = swap->sort_final_b2;
-	calc_pos_current(swap->sort_final_b2, swap->val_b);
-	calc_tab_distance_b2(swap, elem, &i);
+	calc_tab_distance_b2(swap, swap->val_b, &i);
 	while (i < swap->nb_numb)
 		swap->tab_distance_b[i++] = -1;
+//	test_radix(swap, 1, 'b');
 }

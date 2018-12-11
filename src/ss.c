@@ -25,6 +25,7 @@ void		sa2(t_swap *swap)
 		swap->val_a2->back = element2;
 		swap->val_a2 = element2;
 	}
+	swap->check_act2 = SA;
 }
 
 void		sa(t_swap *swap)
@@ -51,6 +52,7 @@ void		sa(t_swap *swap)
 		swap->val_a->back = element2;
 		swap->val_a = element2;
 	}
+	swap->check_act = SA;
 	sa2(swap);
 }
 
@@ -78,6 +80,7 @@ void		sb2(t_swap *swap)
 		swap->val_b2->back = element2;
 		swap->val_b2 = element2;
 	}
+	swap->check_act2 = SB;
 }
 
 void		sb(t_swap *swap)
@@ -104,17 +107,20 @@ void		sb(t_swap *swap)
 		swap->val_b->back = element2;
 		swap->val_b = element2;
 	}
+	swap->check_act = SB;
 	sb2(swap);
-}
-
-void		ss(t_swap *swap)
-{
-	sa(swap);
-	sb(swap);
 }
 
 void		ss2(t_swap *swap)
 {
 	sa2(swap);
 	sb2(swap);
+	swap->check_act2 = SS;
+}
+
+void		ss(t_swap *swap)
+{
+	sa(swap);
+	sb(swap);
+	swap->check_act = SS;
 }
