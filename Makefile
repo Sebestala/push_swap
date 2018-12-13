@@ -56,16 +56,16 @@ $(DSRC)%.o : $(DSRC)%.c includes/$(NAME_CHECKER).h
 	@$(CC) $(FLAGS) -o $@ -c $<
 
 $(LIB) : 
-	#@make -C $(DLIB)
+	@make -C $(DLIB)
 
 clean :
-	#@make -C $(DLIB) clean
+	@make -C $(DLIB) clean
 	@rm -r $(OBJ)
 	@rm -r $(OBJ2)
 	@rm -r $(OBJ3)
 
 fclean : clean
-	#@make -C $(DLIB) fclean
+	@make -C $(DLIB) fclean
 	@rm -r $(NAME_CHECKER)
 	@rm -r $(NAME_PUSH_SWAP)
 

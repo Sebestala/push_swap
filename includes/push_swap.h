@@ -194,5 +194,6 @@ int					is_rb(t_swap *swap);
 void				algo3(t_swap *swap);
 void				write_clone(t_swap *swap, t_val *elem3);
 void		test_list(t_swap *swap, int nb, char c);
+void			free_struct(t_swap *swap);
 
 #endif

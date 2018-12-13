@@ -1,30 +1,5 @@
 
 #include "../includes/push_swap.h"
-/*
-int				is_rr2(t_swap *swap)
-{
-	t_val	*val;
-	int		i;
-
-	i = 0;
-	val = swap->val_b2;
-	if (test_pile2(swap->sort_final_b2, swap->val_b2))
-	{
-		if (swap->sort_final_b2 == swap->val_b2)
-			return (FALSE);
-		while (val && i != swap->mid_b2)
-		{
-			val = val->next;
-			if (val == val->sort_final_b2;
-				return (TRUE);
-			i++;
-		}
-	}
-				return (TRUE);
-
-}
-*/
-
 
 int				is_rrb(t_swap *swap)
 {
@@ -100,8 +75,7 @@ int				is_rb2(t_swap *swap)
 
 int				is_pb2(t_swap *swap)
 {
-//	printf ("VAL = %d   SORT = %d   nb = %d\n", swap->val_a2->val, swap->val_a2->pos_final_sort, swap->nb_numb / 2);
-	if (swap->tab_distance_a2[0] < 2 /* || swap->val_a2->pos_final_sort <= (swap->nb_numb / 3)*/)
+	if (swap->tab_distance_a2[0] < 2)
 		return (FALSE);
 	pb2(swap);
 	return (TRUE);
@@ -203,20 +177,6 @@ int				is_ss2(t_swap *swap)
 		sb2(swap);
 	else if (i == 1)
 		sa2(swap);
-/*
-int j = 0;
-t_val	*val2 = swap->val_a2;
-printf("dst a = %d      dst b = %d    dst a2 = %d     dst b2 = %d  numb = %d \n", swap->total_distance_a, swap->total_distance_b, swap->total_distance_a2, swap->total_distance_b2, swap->nb_numb);
-while (j < swap->nb_numb)
-{
-	pb2(swap);
-printf("val = %d   TAB_A[%d]=%d      TAB_B[%d]=%d    curr = %d    final = %d\n", val2->val, j, swap->tab_distance_a2[j], j, swap->tab_distance_b2[j], val2->pos_current, val2->pos_final);
-j++;
-void			algo(t_swap *swap)
-val2 = val2->next;
-}
-exit(0);
-*/
 	return (i);
 }
 

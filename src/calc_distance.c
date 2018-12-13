@@ -13,8 +13,6 @@ static void		calc_pos_current(t_val *min, t_val *first)
 		while (elem)
 		{
 			elem->pos_current = i;
-//if (first)
-//	printf("min = %d   first = %d       val = %d  current = %d   final = %d  \n", min->val, first->val, elem->val, elem->pos_current, elem->pos_final);
 			i++;
 			elem = elem->next;
 		}
@@ -22,8 +20,6 @@ static void		calc_pos_current(t_val *min, t_val *first)
 		while (elem && elem != min)
 		{
 			elem->pos_current = i;
-//if (first)
-//	printf("min = %d   first = %d       val = %d  current = %d   final = %d  \n", min->val, first->val, elem->val, elem->pos_current, elem->pos_final);
 			i++;
 			elem = elem->next;
 		}
@@ -38,7 +34,6 @@ static void		calc_tab_distance_a2(t_swap *swap, t_val *elem, int *i)
 		if (swap->tab_distance_a[*i] > swap->mid_a)
 			swap->tab_distance_a[*i] = swap->length_a - absolue(elem->pos_current - elem->pos_final);
 		swap->total_distance_a += swap->tab_distance_a[*i];
-//printf("A1  i = %d   val = %d    pos_current = %d  final = %d    total_distance = %d  \n", *i, elem->val, elem->pos_current, elem->pos_final, swap->total_distance_a);
 		elem = elem->next;
 		(*i)++;
 	}
@@ -55,7 +50,6 @@ void			calc_tab_distance_a1(t_swap *swap, int i, int check)
 	calc_tab_distance_a2(swap, swap->val_a, &i);
 	while (i < swap->nb_numb)
 		swap->tab_distance_a[i++] = -1;
-//	test_radix(swap, 1, 'a');
 }
 
 static void		calc_tab_distance_b2(t_swap *swap, t_val *elem, int *i)
@@ -82,5 +76,4 @@ void			calc_tab_distance_b1(t_swap *swap, int i, int check)
 	calc_tab_distance_b2(swap, swap->val_b, &i);
 	while (i < swap->nb_numb)
 		swap->tab_distance_b[i++] = -1;
-//	test_radix(swap, 1, 'b');
 }

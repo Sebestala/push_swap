@@ -31,14 +31,7 @@ static void		find_rra_rb(t_swap *swap, t_val *el, t_val *el2, t_val *back)
 			swap->b = 0;
 			swap->a++;
 		}
-/*		if (el)
-			printf("A = %d", el->val);
-		if (back)
-			printf("   A2 = %d", back->val);
-		if (el2)
-			printf("   B = %d", el2->val);
-		printf("   a = %d   b = %d\n", swap->a, swap->b);
-*/		if (!el || !el2)
+		if (!el || !el2)
 			break ;
 		if ((el2->val < back->val || back->pos_final_sort == 1) &&
 					el2->val > el->val && swap->a + swap->b < swap->res1)
@@ -77,18 +70,7 @@ static void		find_rra_rrb(t_swap *swap, t_val *el, t_val *el2, t_val *back)
 			swap->b = 0;
 			swap->a++;
 		}
-/*		if (el)
-			printf("A = %d", el->val);
-		if (back)
-			printf("   A2 = %d", back->val);
-		if (el2)
-		if (el)
-			printf("A = %d", el->val);
-			printf("   B = %d", el2->val);
-		printf("   a = %d   b = %d\n", swap->a, swap->b);
-		if (el)
-			printf("A = %d", el->val);
-*/		if (!el || !el2)
+		if (!el || !el2)
 			break ;
 		if ((el2->val < back->val || back->pos_final_sort == 1) &&
 	el2->val > el->val && (swap->a < swap->res1 && swap->b < swap->res1))
@@ -121,14 +103,7 @@ static void		find_ra_rrb(t_swap *swap, t_val *el, t_val *el2, t_val *back)
 			swap->b = 0;
 			swap->a++;
 		}
-/*		if (el)
-			printf("A = %d", el->val);
-		if (back)
-			printf("   A2 = %d", back->val);
-		if (el2)
-			printf("   B = %d", el2->val);
-		printf("   a = %d   b = %d\n", swap->a, swap->b);
-*/		if (!el || !el2)
+		if (!el || !el2)
 			break ;
 		if (el2->val > back->val && (el2->val < el->val || el->pos_final_sort == 1) &&
 				swap->a + swap->b < swap->res1)
@@ -170,14 +145,7 @@ static void		find_ra_rb(t_swap *swap, t_val *el, t_val *el2, t_val *back)
 			swap->b = 0;
 			swap->a++;
 		}
-/*		if (el)
-			printf("A = %d", el->val);
-		if (back)
-			printf("   A2 = %d", back->val);
-		if (el2)
-			printf("   B = %d", el2->val);
-		printf("   a = %d   b = %d\n", swap->a, swap->b);
-*/		if (!el || !el2)
+		if (!el || !el2)
 			break ;
 		if (el2->val > back->val && (el2->val < el->val ||
 	el->pos_final_sort == 1) && (swap->a < swap->res1 && swap->b < swap->res1))
@@ -225,21 +193,16 @@ void		algo3(t_swap *swap)
 		swap->res1 = 9999;
 		swap->a = 0;
 		swap->b = 0;
-//		printf("ra = %d rb = %d rr = %d rra = %d rrb = %d rrr = %d  swap->res1 = %d\n", swap->ra, swap->rb, swap->rr, swap->rra, swap->rrb, swap->rrr, swap->res1);
 		find_ra_rb(swap, swap->val_a, swap->val_b, swap->val_a_last);
 		swap->a = 0;
 		swap->b = 0;
-//		printf("ra = %d rb = %d rr = %d rra = %d rrb = %d rrr = %d  swap->res1 = %d\n", swap->ra, swap->rb, swap->rr, swap->rra, swap->rrb, swap->rrr, swap->res1);
 		find_rra_rrb(swap, swap->val_a_last, swap->val_b, swap->val_a);
 		swap->a = 0;
 		swap->b = 0;
-//		printf("ra = %d rb = %d rr = %d rra = %d rrb = %d rrr = %d  swap->res1 = %d\n", swap->ra, swap->rb, swap->rr, swap->rra, swap->rrb, swap->rrr, swap->res1);
 		find_ra_rrb(swap, swap->val_a, swap->val_b, swap->val_a_last);
 		swap->a = 0;
 		swap->b = 0;
-//		printf("ra = %d rb = %d rr = %d rra = %d rrb = %d rrr = %d  swap->res1 = %d\n", swap->ra, swap->rb, swap->rr, swap->rra, swap->rrb, swap->rrr, swap->res1);
 		find_rra_rb(swap, swap->val_a_last, swap->val_b, swap->val_a);
-//		printf("ra = %d rb = %d rr = %d rra = %d rrb = %d rrr = %d  swap->res1 = %d\n", swap->ra, swap->rb, swap->rr, swap->rra, swap->rrb, swap->rrr, swap->res1);
 	}
 	if (swap->rr > 0)
 	{

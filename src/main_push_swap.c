@@ -57,5 +57,6 @@ int		main(int ac, char **av)
 	}
 	esc_visu(swap, 1);
 	ft_printf("Move : %d\n", swap->nb_move);
+	free_struct(swap);
 	return (0);
 }

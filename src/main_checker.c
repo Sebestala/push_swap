@@ -92,5 +92,6 @@ int		main(int ac, char **av)
 	while (swap->check_visu >= 1)
 		print_visu(swap);
 	list_is_valid(swap);
+	free_struct(swap);
 	return (0);
 }

@@ -17,19 +17,10 @@ void		write_clone(t_swap *swap, t_val *elem3)
 
 	val = swap->val_a;
 	val2 = swap->val_a2;
-//	elem = swap->val_b2;
 	elem2 = NULL;
-//	test_list(swap, 2, 'a');
-//	printf("val = %d   last = %d\n", val->val, swap->val_a_last->val);
-//printf("TEST029  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
-//printf("*************************************************\n");
-//printf("*************************************************\n");
 	while (val)
 	{
 		write_clone2(val, val2);
-//printf("-------------------------------\n");
-//	printf("1 val = %d   curr = %d   final = %d    sort = %d    back = %p    next = %p   addr = %p\n2 val = %d   curr = %d   final = %d    sort = %d    back = %p    next = %p    addr = %p   val_b2 = %p   val_b = %p\n\n", val->val, val->pos_current, val->pos_final, val->pos_final_sort, val->back, val->next, val, val2->val, val2->pos_current, val2->pos_final, val2->pos_final_sort, val2->back, val2->next, val2, swap->val_b2, swap->val_b);
-
 		if (val == swap->val_a_last)
 		{
 			swap->val_a_last2 = val2;
@@ -65,7 +56,6 @@ void		write_clone(t_swap *swap, t_val *elem3)
 		else
 		{
 			val = val->next;
-//printf("val2->next = %p   elem2 = %p\n", val2->next, elem2);
 			if (val)
 			{
 				if (val2->next == NULL)
@@ -77,37 +67,12 @@ void		write_clone(t_swap *swap, t_val *elem3)
 				val2 = val2->next;
 			}
 		}
-/*	test_list(swap, 1, 'a');
-	test_list(swap, 1, 'b');
-	test_list(swap, 2, 'a');
-	test_list(swap, 2, 'b');
-	if (val && val2)
-	printf("1 val = %d   curr = %d   final = %d    sort = %d    back = %p    next = %p   addr = %p\n2 val = %d   curr = %d   final = %d    sort = %d    back = %p    next = %p    addr = %p\n\n", val->val, val->pos_current, val->pos_final, val->pos_final_sort, val->back, val->next, val, val2->val, val2->pos_current, val2->pos_final, val2->pos_final_sort, val2->back, val2->next, val2);
-printf("-------------------------------\n");
-*/	}
-//printf("*************************************************\n");
-//printf("*************************************************\n");
+	}
 	if (swap->val_b2)
 		swap->val_b_last2 = val2;
 	swap->length_a2 = swap->length_a;
 	swap->length_b2 = swap->length_b;
 	swap->check_act2 = swap->check_act;
-/*	if (!swap->val_b)
-		swap->val_b2 = NULL;
-	if (!swap->val_b_last)
-		swap->val_b_last2 = NULL;
-*///	test_list(swap, 2, 'a');
-//	test_list(swap, 2, 'b');
-/*printf("******************************\n");
-	test_list(swap, 1, 'a');
-	test_list(swap, 1, 'b');
-	test_list(swap, 2, 'a');
-	test_list(swap, 2, 'b');
-printf("******************************\n");
-*///printf("ELEM2 = %d\n", elem2->val);
-//printf("TEST030  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
-//	swap->val_b_last2 = val2;
-//printf("TEST031  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
 	radix2(swap, 'a');
 	calc_tab_distance_a1_2(swap, 0, 0);
 	if (swap->val_b2)
@@ -115,14 +80,11 @@ printf("******************************\n");
 		radix2(swap, 'b');
 		calc_tab_distance_b1_2(swap, 0, 0);
 	}
-//printf("///////////////////////////////////////////////////////\n");
-//	test_list(swap, 2, 'b');
-//printf("///////////////////////////////////////////////////////\n");
 }
 
 int				is_pb(t_swap *swap)
 {
-	if (swap->tab_distance_a[0] < 2 /*|| swap->length_b >= (swap->nb_numb / 2)*/)
+	if (swap->tab_distance_a[0] < 2)
 		return (FALSE);
 	pb(swap);
 	return (TRUE);
@@ -235,23 +197,6 @@ int				is_ss(t_swap *swap)
 	}
 	return (i);
 }
-/*
-void			pile_a_valid(t_swap *swap)
-{
-	int		i;
-	int		dist;
-	t_val	*elem;
-
-	i = 0;
-	dist = 0;
-	elem = swap->val_a;
-	while (swap->check_move == 0 && elem && i < swap->length_a / 2 + swap->length_a % 2)
-	{
-		if (elem->next && 
-		i++;
-	}
-}
-*/
 
 void			do_ss(t_val *val, int *tab, int len, t_swap *swap)
 {
@@ -343,14 +288,12 @@ void			is_rr_or_rrr2(t_swap *swap)
 		}
 		else if (swap->check_act2 != PA && is_pb2(swap))
 			swap->point_back += 1;
-		else if (/*swap->check_act2 != SA && swap->check_act2 != SB && swap->check_act2 != SS &&*/ is_ss2(swap))
+		else if (is_ss2(swap))
 			swap->c = swap->c;
 		else if (swap->check_act2 != RB && is_rrb2(swap))
 			swap->c = swap->c;
 		else if (swap->check_act2 != RRB && is_rb2(swap))
 			swap->c = swap->c;
-//		else if (is_rr2(swap))
-//			mid--;
 		else
 		{
 			rrr2(swap);
@@ -366,8 +309,6 @@ void			is_rr_or_rrr2(t_swap *swap)
 	mid = (swap->total_distance_b - swap->total_distance_b2) / 2;
 	if (mid > 0)
 		swap->point_back += mid;
-//	test_list(swap, 2, 'a');
-//	test_list(swap, 2, 'b');
 	write_clone(swap, swap->val_a_last2);
 	is_rr_or_rrr3(swap);
 }
@@ -381,10 +322,8 @@ void			is_rr_or_rrr(t_swap *swap)
 	swap->point_back = 0;
 	swap->length_a2 = swap->length_a;
 	swap->length_b2 = swap->length_b;
-//	test_list(swap, 1, 'a');
 	while (mid > 0)
 	{
-//printf("TEST00  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
 		if (swap->check_act2 != PB && swap->val_b2 && is_pa2(swap))
 		{
 			pa2(swap);
@@ -392,22 +331,18 @@ void			is_rr_or_rrr(t_swap *swap)
 		}
 		else if (swap->check_act2 != PA && is_pb2(swap))
 			swap->point_next += 2;
-		else if (/*swap->check_act2 != SA && swap->check_act2 != SB && swap->check_act2 != SS &&*/ is_ss2(swap))
+		else if (is_ss2(swap))
 			swap->c = swap->c;
 		else if (swap->check_act2 != RB && is_rrb2(swap))
 			swap->c = swap->c;
 		else if (swap->check_act2 != RRB && is_rb2(swap))
 			swap->c = swap->c;
-//		else if (is_rr2(swap))
-//			mid--;
 		else
 		{
 			rr2(swap);
 			mid--;
 		}
 		is_radix2(swap);
-//	test_list(swap, 2, 'a');
-//	test_list(swap, 2, 'b');
 	}
 	calc_tab_distance_a1_2(swap, 0, 1);
 	calc_tab_distance_b1_2(swap, 0, 1);
@@ -417,88 +352,12 @@ void			is_rr_or_rrr(t_swap *swap)
 	mid = (swap->total_distance_b - swap->total_distance_b2) / 2;
 	if (mid > 0)
 		swap->point_next += mid;
-//printf("TEST001  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
 	write_clone(swap, swap->val_a_last2);
-//printf("TEST002  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
 	is_rr_or_rrr2(swap);
-}
-
-int		test1(t_swap *swap)
-{
-/*	if (!ft_strcmp(swap->line, "ss") && swap->check_act != SS)
-		ss(swap);
-	else if (!ft_strcmp(swap->line, "sa") && swap->check_act != SA)
-		sa(swap);
-	else if (!ft_strcmp(swap->line, "sb") && swap->check_act != SB)
-		sb(swap);
-	else if (!ft_strcmp(swap->line, "pa") && swap->check_act != PA)
-		pa(swap);
-	else if (!ft_strcmp(swap->line, "pb") && swap->check_act != PB)
-		pb(swap);
-	else if (!ft_strcmp(swap->line, "ra") && swap->check_act != RA)
-		ra(swap);
-	else if (!ft_strcmp(swap->line, "rb") && swap->check_act != RB)
-		rb(swap);
-	else if (!ft_strcmp(swap->line, "rr") && swap->check_act != RR)
-		rr(swap);
-	else if (!ft_strcmp(swap->line, "rra") && swap->check_act != RRA)
-		rra(swap);
-	else if (!ft_strcmp(swap->line, "rrb") && swap->check_act != RRB)
-		rra(swap);
-	else if (!ft_strcmp(swap->line, "rrr") && swap->check_act != RRR)
-		rra(swap);
-*/
-printf("\n");
-	test_list(swap, 1, 'a');
-	test_list(swap, 1, 'b');
-	test_list(swap, 2, 'a');
-	test_list(swap, 2, 'b');
-/*
-if (swap->check_act == PA)
-printf("  PA");
-fflush(stdout);swap->check_act != PB && 
-if (swap->check_act == PB)
-printf("  PB");
-fflush(stdout);
-if (swap->check_act == SA)
-printf("  SA");
-fflush(stdout);
-if (swap->check_act == SB)
-printf("  SB");
-fflush(stdout);
-if (swap->check_act == SS)
-printf("  SS");
-fflush(stdout);
-if (swap->check_act == RA)
-printf("  RA");
-fflush(stdout);
-if (swap->check_act == RB)
-printf("  RB");
-fflush(stdout);
-if (swap->check_act == RR)
-printf("  RR");
-fflush(stdout);
-if (swap->check_act == RRA)
-printf("  RRA");
-fflush(stdout);
-if (swap->check_act == RRB)
-printf("  RRB");
-fflush(stdout);
-if (swap->check_act == RRR)
-printf("  RRR");
-fflush(stdout);*/
-return (0);
 }
 
 void			algo(t_swap *swap)
 {
-/*
-printf("\n");
-	test_list(swap, 1, 'a');
-	test_list(swap, 1, 'b');
-	test_list(swap, 2, 'a');
-	test_list(swap, 2, 'b');
-*/
 	if (swap->val_a->next->pos_final_sort == 1 && swap->val_a->pos_final != swap->length_a  && is_ss(swap))
 		swap->c = swap->c;
 	else if (swap->check_act != PB && swap->val_b && is_pa(swap))
@@ -509,10 +368,7 @@ printf("\n");
 	else if (swap->check_act != PA && is_pb(swap))
 		swap->line = ft_strncpy(swap->line, "pb", 3);
 	else if (test_pile2(swap->sort_final_a, swap->val_a))
-	{
 		algo3(swap);
-//printf("TEST\n");
-	}
 	else if (is_ss(swap))
 		swap->c = swap->c;
 	else if (swap->check_act != RB && is_rrb(swap))
@@ -536,15 +392,5 @@ printf("\n");
 			swap->rrr--;
 		}
 	}
-//printf("\t------------------ \n");
 	is_radix(swap);
-/*	if (swap->test == 50)
-	{
-printf("\n");
-	test_list(swap, 1, 'a');
-	test_list(swap, 1, 'b');
-	test_list(swap, 2, 'a');
-	test_list(swap, 2, 'b');
-	}*/
-swap->test++;
 }
