@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_push_swap.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:43:56 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 17:43:59 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
@@ -19,7 +30,6 @@ static int		list_is_valid(t_swap *swap)
 			return (FALSE);
 		nb++;
 	}
-//printf("nb = %d   numb = %d\n", nb, swap->nb_numb);
 	if (nb == swap->nb_numb)
 		return (TRUE);
 	return (FALSE);

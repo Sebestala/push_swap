@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_checker.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:43:47 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 17:43:51 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
@@ -36,7 +47,7 @@ static void		command2(t_swap *swap)
 		rrr(swap);
 	else if (!ft_strcmp(swap->line, "esc") && swap->check_visu == 1)
 		swap->check_visu = 0;
-	else
+	else if (ft_strncmp(swap->line, "Move :", 6))
 	{
 		esc_visu(swap, 1);
 		exit_str("Error : operation doesn't exist");

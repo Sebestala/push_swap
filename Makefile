@@ -22,6 +22,9 @@ SRC2 =		main_push_swap.c\
 			algo.c\
 			algo2.c\
 			algo3.c\
+			algo4.c\
+			algo5.c\
+			algo6.c\
 			radix2.c
 
 

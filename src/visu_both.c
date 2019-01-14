@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visu_both.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:45:51 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 17:45:57 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
@@ -94,14 +105,11 @@ void			print_player(t_swap *swap, int i, int j, int k)
 {
 	t_val	*val;
 
-//	calc_tab_distance_a1(swap, 0);
 	val = swap->val_a;
 	while (val)
 	{
 		swap->c = getch();
 		j = 0;
-//		if (i > 0 || val->pos_final == 1)
-//			i++;
 		if (val->pos_final == val->pos_current/*i*/)
 			wattron(swap->pile1, COLOR_PAIR(COLOR_GOOD_PLACE));
 		while (j <= swap->nb_numb)

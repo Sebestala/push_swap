@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:37:59 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 19:21:21 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
@@ -62,16 +73,20 @@ typedef	struct		s_swap
 	t_tab			*tab_pos2;
 	t_val			*val_a;
 	t_val			*val_a_last;
-	t_val			*sort_final_a;// début de la chaine trié par radix
+	t_val			*sort_final_a;
 	t_val			*val_b;
 	t_val			*val_b_last;
 	t_val			*sort_final_b;
 	t_val			*val_a2;
 	t_val			*val_a_last2;
-	t_val			*sort_final_a2;//element le plus petit de a
+	t_val			*sort_final_a2;
 	t_val			*val_b2;
 	t_val			*val_b_last2;
-	t_val			*sort_final_b2;//element le plus petit de b
+	t_val			*sort_final_b2;
+	t_val			*val;
+	t_val			*val2;
+	t_val			*elem;
+	t_val			*elem2;
 	int				*tab_distance_a;
 	int				total_distance_a;
 	int				*tab_distance_b;
@@ -84,7 +99,6 @@ typedef	struct		s_swap
 	int				mid_b;
 	int				length_a;
 	int				length_b;
-
 	int				point_next;
 	int				point_back;
 	int				length_a2;
@@ -101,7 +115,6 @@ typedef	struct		s_swap
 	int				a;
 	int				b;
 	int				is_sort;
-
 	char			*line;
 	int				last_b;
 	int				first_b;
@@ -119,7 +132,6 @@ typedef	struct		s_swap
 	int				check_act;
 	int				check_act2;
 	int				c;
-	int		test;
 }					t_swap;
 
 void				pa(t_swap *swap);
@@ -142,7 +154,7 @@ void				ra2(t_swap *swap);
 void				rb2(t_swap *swap);
 void				rr2(t_swap *swap);
 void				rra2(t_swap *swap);
-int			test_pile(t_val *val);
+int					test_pile(t_val *val);
 void				rrb2(t_swap *swap);
 void				rrr2(t_swap *swap);
 void				radix(t_swap *swap, char c);
@@ -193,7 +205,16 @@ int					is_rrb(t_swap *swap);
 int					is_rb(t_swap *swap);
 void				algo3(t_swap *swap);
 void				write_clone(t_swap *swap, t_val *elem3);
-void		test_list(t_swap *swap, int nb, char c);
-void			free_struct(t_swap *swap);
+void				test_list(t_swap *swap, int nb, char c);
+void				free_struct(t_swap *swap);
+void				find_rra_rb(t_swap *swap, t_val *el, t_val *el2,
+		t_val *back);
+void				find_rra_rrb(t_swap *swap, t_val *el, t_val *el2,
+		t_val *back);
+void				find_ra_rrb(t_swap *swap, t_val *el, t_val *el2,
+		t_val *back);
+void				find_ra_rb(t_swap *swap, t_val *el, t_val *el2,
+		t_val *back);
+void				clean_result(t_swap *swap);
 
 #endif

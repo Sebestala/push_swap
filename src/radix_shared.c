@@ -1,10 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   radix_shared.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:44:20 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 17:44:36 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
 void		radix_zero(t_swap *swap)
 {
-//printf("radix_init\n");
-//fflush(stdout);
 	int		i;
 
 	i = 0;
@@ -26,8 +35,6 @@ void		radix_zero(t_swap *swap)
 
 void		radix_init(t_swap *swap)
 {
-//printf("radix_init\n");
-//fflush(stdout);
 	swap->tab_neg1 = memalloc_sterr(sizeof(t_tab), "radix   code : 1");
 	swap->tab_neg2 = memalloc_sterr(sizeof(t_tab), "radix   code : 2");
 	swap->tab_pos1 = memalloc_sterr(sizeof(t_tab), "radix   code : 3");
@@ -38,8 +45,6 @@ void		radix_init(t_swap *swap)
 
 void			radix_put_val_at_end_list(t_val *val, void **tab, int nb)
 {
-//printf("radix_put_val_at_end_of_list NB = %d\n", nb);
-//fflush(stdout);
 	t_val	*element;
 
 	if (nb < 0)
@@ -57,8 +62,6 @@ void			radix_put_val_at_end_list(t_val *val, void **tab, int nb)
 
 static void		radix_sort_algo2(t_tab *tab1, t_tab *tab2, int nb1, int nb2)
 {
-//printf("radix_sort_algo2\n");
-//fflush(stdout);
 	t_val	*val;
 	t_val	*element;
 	int		i;
@@ -85,8 +88,6 @@ static void		radix_sort_algo2(t_tab *tab1, t_tab *tab2, int nb1, int nb2)
 
 void			radix_sort_algo(t_tab *tab1, t_tab *tab2, int size)
 {
-//printf("radix_sort_algo\n");
-//fflush(stdout);
 	int		nb1;
 	int		nb2;
 	int		i;

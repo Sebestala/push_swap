@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calc_distance.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:42:52 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 17:47:53 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
@@ -32,7 +43,8 @@ static void		calc_tab_distance_a2(t_swap *swap, t_val *elem, int *i)
 	{
 		swap->tab_distance_a[*i] = absolue(elem->pos_current - elem->pos_final);
 		if (swap->tab_distance_a[*i] > swap->mid_a)
-			swap->tab_distance_a[*i] = swap->length_a - absolue(elem->pos_current - elem->pos_final);
+			swap->tab_distance_a[*i] =
+				swap->length_a - absolue(elem->pos_current - elem->pos_final);
 		swap->total_distance_a += swap->tab_distance_a[*i];
 		elem = elem->next;
 		(*i)++;
@@ -58,7 +70,8 @@ static void		calc_tab_distance_b2(t_swap *swap, t_val *elem, int *i)
 	{
 		swap->tab_distance_b[*i] = absolue(elem->pos_current - elem->pos_final);
 		if (swap->tab_distance_b[*i] > swap->mid_b)
-			swap->tab_distance_b[*i] = swap->length_b - absolue(elem->pos_current - elem->pos_final);
+			swap->tab_distance_b[*i] =
+				swap->length_b - absolue(elem->pos_current - elem->pos_final);
 		swap->total_distance_b += swap->tab_distance_b[*i];
 		elem = elem->next;
 		(*i)++;

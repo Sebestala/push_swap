@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calc_distance2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:43:32 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 17:48:21 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
@@ -30,9 +41,11 @@ static void		calc_tab_distance_a2(t_swap *swap, t_val *elem, int *i)
 {
 	while (elem)
 	{
-		swap->tab_distance_a2[*i] = absolue(elem->pos_current - elem->pos_final);
+		swap->tab_distance_a2[*i] =
+			absolue(elem->pos_current - elem->pos_final);
 		if (swap->tab_distance_a2[*i] > swap->mid_a2)
-			swap->tab_distance_a2[*i] = swap->length_a2 - absolue(elem->pos_current - elem->pos_final);
+			swap->tab_distance_a2[*i] =
+				swap->length_a2 - absolue(elem->pos_current - elem->pos_final);
 		swap->total_distance_a2 += swap->tab_distance_a2[*i];
 		elem = elem->next;
 		(*i)++;
@@ -56,9 +69,11 @@ static void		calc_tab_distance_b2(t_swap *swap, t_val *elem, int *i)
 {
 	while (elem)
 	{
-		swap->tab_distance_b2[*i] = absolue(elem->pos_current - elem->pos_final);
+		swap->tab_distance_b2[*i] =
+			absolue(elem->pos_current - elem->pos_final);
 		if (swap->tab_distance_b2[*i] > swap->mid_b2)
-			swap->tab_distance_b2[*i] = swap->length_b2 - absolue(elem->pos_current - elem->pos_final);
+			swap->tab_distance_b2[*i] =
+				swap->length_b2 - absolue(elem->pos_current - elem->pos_final);
 		swap->total_distance_b2 += swap->tab_distance_b2[*i];
 		elem = elem->next;
 		(*i)++;

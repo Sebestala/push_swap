@@ -1,75 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:43:07 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 19:34:10 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-void		write_clone2(t_val *val, t_val *val2)
+static void		write_clone2(t_swap *swap)
 {
-	val2->val = val->val;
-	val2->pos_current = val->pos_current;
-	val2->pos_final = val->pos_final;
-	val2->pos_final_sort = val->pos_final_sort;
+	swap->val2->val = swap->val->val;
+	swap->val2->pos_current = swap->val->pos_current;
+	swap->val2->pos_final = swap->val->pos_final;
+	swap->val2->pos_final_sort = swap->val->pos_final_sort;
 }
 
-void		write_clone(t_swap *swap, t_val *elem3)
+static void		write_clone_4(t_swap *swap)
 {
-	t_val	*val;
-	t_val	*val2;
-	t_val	*elem;
-	t_val	*elem2;
-
-	val = swap->val_a;
-	val2 = swap->val_a2;
-	elem2 = NULL;
-	while (val)
-	{
-		write_clone2(val, val2);
-		if (val == swap->val_a_last)
-		{
-			swap->val_a_last2 = val2;
-			if (swap->val_b)
-			{
-				val = swap->val_b;
-				elem = val2;
-				if (val2->next)
-				{
-					val2 = val2->next;
-					elem->next = NULL;
-					elem2 = swap->val_b2;
-					swap->val_b2 = val2;
-					val2->back = NULL;
-				}
-				else
-					val2 = swap->val_b2;
-			}
-			else
-			{
-				val = val->next;
-				swap->val_b_last2 = NULL;
-				swap->val_b2 = NULL;
-			}
-		}
-		else if (val2 == swap->val_a_last2)
-		{
-			val2->next = swap->val_b2;
-			swap->val_b2->back = val2;
-			val2 = val2->next;
-			val = val->next;
-		}
-		else
-		{
-			val = val->next;
-			if (val)
-			{
-				if (val2->next == NULL)
-				{
-					val2->next = elem2;
-					elem2->back = val2;
-					elem2 = NULL;
-				}
-				val2 = val2->next;
-			}
-		}
-	}
 	if (swap->val_b2)
-		swap->val_b_last2 = val2;
+		swap->val_b_last2 = swap->val2;
 	swap->length_a2 = swap->length_a;
 	swap->length_b2 = swap->length_b;
 	swap->check_act2 = swap->check_act;
@@ -82,315 +36,67 @@ void		write_clone(t_swap *swap, t_val *elem3)
 	}
 }
 
-int				is_pb(t_swap *swap)
+static void		write_clone_3(t_swap *swap)
 {
-	if (swap->tab_distance_a[0] < 2)
-		return (FALSE);
-	pb(swap);
-	return (TRUE);
-}
-
-int				is_pa(t_swap *swap)
-{
-	t_val	*val;
-	int		pos;
-	int		i;
-
-	val = swap->val_a;
-	pos = 0;
-	while (val)
+	swap->val = swap->val->next;
+	if (swap->val)
 	{
-		if (swap->val_b->val > val->val && pos <= val->pos_final)
-			pos = val->pos_final + 1;
-		val = val->next;
-	}
-	if (pos == 0)
-		pos = swap->length_a + 1;
-	if (swap->val_a->pos_current == 1)
-		i = swap->length_a + 1;
-	else
-		i = swap->val_a->pos_current;
-	if (absolue(i - pos) == 0)
-		return (TRUE);
-	return (FALSE);
-}
-
-int				is_ss(t_swap *swap)
-{
-	int		res;
-	int		res2;
-	int		i;
-
-	i = 0;
-	if (swap->check_act != SA && swap->val_a->next && swap->val_a->pos_final != swap->length_a && swap->val_a->next->pos_final == 1)
-	{
-		res = swap->total_distance_a2;
-		res2 = swap->check_act2;
-		sa2(swap);
-		radix2(swap, 'a');
-		calc_tab_distance_a1_2(swap, 0, 0);
-		if (res - swap->total_distance_a2 > 0)
-			i++;
-		sa2(swap);
-		radix2(swap, 'a');
-		calc_tab_distance_a1_2(swap, 0, 0);
-		swap->check_act2 = res2;
-	}
-	else if (swap->check_act != SA && swap->val_a->next)
-	{
-		res2 = absolue(swap->val_a->pos_current - swap->val_a->next->pos_final);
-		if (res2 > swap->mid_a)
-			res2 = swap->length_a - absolue(swap->val_a->pos_current - swap->val_a->next->pos_final);
-		res = res2;
-		res2 = absolue(swap->val_a->next->pos_current - swap->val_a->pos_final);
-		if (res2 > swap->mid_a)
-			res2 = swap->length_a - absolue(swap->val_a->next->pos_current - swap->val_a->pos_final);
-		res += res2;
-		if ((swap->tab_distance_a[0] + swap->tab_distance_a[1]) - res > 0)
-			i++;
-	}
-	if (swap->check_act != SA && i < 1 && swap->val_a && swap->val_a->next && swap->val_a->pos_current != 1  && swap->val_a->next->pos_current != 1 && swap->val_a->val < swap->val_a->next->val && (swap->tab_distance_a[0] + swap->tab_distance_a[1]) - res == 0)
-		i++;
-	if (swap->check_act != SB && swap->val_b && swap->val_b->next && swap->val_b->pos_final != swap->length_b && swap->val_b->next->pos_final == 1)
-	{
-		res = swap->total_distance_b2;
-		res2 = swap->check_act2;
-		sb2(swap);
-		radix2(swap, 'b');
-		calc_tab_distance_b1_2(swap, 0, 0);
-		if (res - swap->total_distance_b2 > 0)
-			i += 5;
-		sb2(swap);
-		radix2(swap, 'b');
-		calc_tab_distance_b1_2(swap, 0, 0);
-		swap->check_act2 = res2;
-	}
-	else if (swap->check_act != SB && swap->val_b && swap->val_b->next)
-	{
-		res2 = absolue(swap->val_b->pos_current - swap->val_b->next->pos_final);
-		if (res2 > swap->mid_b)
-			res2 = swap->length_b - absolue(swap->val_b->pos_current - swap->val_b->next->pos_final);
-		res = res2;
-		res2 = absolue(swap->val_b->next->pos_current - swap->val_b->pos_final);
-		if (res2 > swap->mid_b)
-			res2 = swap->length_b - absolue(swap->val_b->next->pos_current - swap->val_b->pos_final);
-		res += res2;
-		if ((swap->tab_distance_b[0] + swap->tab_distance_b[1]) - res > 0)
-			i += 5;
-	}
-	if (swap->check_act != SB && i < 5 && swap->val_b && swap->val_b->next && swap->val_b->pos_current != 1  && swap->val_b->next->pos_current != 1 && swap->val_b->val < swap->val_b->next->val && (swap->tab_distance_b[0] + swap->tab_distance_b[1]) - res == 0)
-		i += 5;
-	if (i == 6)
-	{
-		ss(swap);
-		swap->line = ft_strncpy(swap->line, "ss ", 3);
-	}
-	else if (i == 5)
-	{
-		sb(swap);
-		swap->line = ft_strncpy(swap->line, "sb ", 3);
-	}
-	else if (i == 1)
-	{
-		sa(swap);
-		swap->line = ft_strncpy(swap->line, "sa ", 3);
-	}
-	return (i);
-}
-
-void			do_ss(t_val *val, int *tab, int len, t_swap *swap)
-{
-	int		nb;
-	int		total;
-	int		i;
-
-	i = 0;
-	nb = val->pos_current;
-	val->pos_current = val->next->pos_current;
-	val->next->pos_current = nb;
-	if (val && val->next && (val->pos_current == 1 || val->next->pos_current == 1))
-	{
-		if (val == swap->val_a)
-			calc_tab_distance_a1(swap, 0, 0);
-		if (val == swap->val_b)
-			calc_tab_distance_b1(swap, 0, 0);
-		return ;
-	}
-	if (val == swap->val_a)
-		total = swap->total_distance_a;
-	if (val == swap->val_b)
-		total = swap->total_distance_b;
-	while (val)
-	{
-		tab[i] = absolue(val->pos_current - val->pos_final);
-		if (tab[i] > len / 2)
-			tab[i] = len - absolue(val->pos_current - val->pos_final);
-		total += tab[i];
-		val = val->next;
-		i++;
-	}
-	while (i < swap->nb_numb)
-		tab[i++] = -1;
-}
-
-void			is_radix(t_swap *swap)
-{
-	if (swap->check_act == RR || swap->check_act == RRR)
-	{
-		calc_tab_distance_a1(swap, 0, 1);
-		calc_tab_distance_b1(swap, 0, 1);
-	}
-	else if (swap->check_act == RA || swap->check_act == RRA)
-		calc_tab_distance_a1(swap, 0, 1);
-	else if (swap->check_act == RB || swap->check_act == RRB)
-		calc_tab_distance_b1(swap, 0, 1);
-	else if (swap->check_act == SA)
-		do_ss(swap->val_a, swap->tab_distance_a, swap->length_a, swap);
-	else if (swap->check_act == SB)
-		do_ss(swap->val_b, swap->tab_distance_b, swap->length_b, swap);
-	else if (swap->check_act == SS)
-	{
-		do_ss(swap->val_a, swap->tab_distance_a, swap->length_a, swap);
-		do_ss(swap->val_b, swap->tab_distance_b, swap->length_b, swap);
-	}
-	else
-	{
-		radix(swap, 'a');
-		calc_tab_distance_a1(swap, 0, 0);
-		if (swap->val_b)
+		if (swap->val2->next == NULL)
 		{
-			radix(swap, 'b');
-			calc_tab_distance_b1(swap, 0, 0);
+			swap->val2->next = swap->elem2;
+			swap->elem2->back = swap->val2;
+			swap->elem2 = NULL;
 		}
+		swap->val2 = swap->val2->next;
 	}
-	is_radix2(swap);
 }
 
-void			is_rr_or_rrr3(t_swap *swap)
+static void		write_clone_2(t_swap *swap)
 {
-	if (swap->point_next >= swap->point_back)
-		swap->rr = swap->length_a / 2 + swap->length_a % 2;
-	else
-		swap->rrr = swap->length_a / 2;
-}
-
-void			is_rr_or_rrr2(t_swap *swap)
-{
-	int		mid;
-
-	mid = swap->length_a / 2;
-	while (mid > 0)
+	swap->val_a_last2 = swap->val2;
+	if (swap->val_b)
 	{
-		if (swap->check_act2 != PB && swap->val_b2 && is_pa2(swap))
+		swap->val = swap->val_b;
+		swap->elem = swap->val2;
+		if (swap->val2->next)
 		{
-			pa2(swap);
-			swap->point_back += 2;
+			swap->val2 = swap->val2->next;
+			swap->elem->next = NULL;
+			swap->elem2 = swap->val_b2;
+			swap->val_b2 = swap->val2;
+			swap->val2->back = NULL;
 		}
-		else if (swap->check_act2 != PA && is_pb2(swap))
-			swap->point_back += 1;
-		else if (is_ss2(swap))
-			swap->c = swap->c;
-		else if (swap->check_act2 != RB && is_rrb2(swap))
-			swap->c = swap->c;
-		else if (swap->check_act2 != RRB && is_rb2(swap))
-			swap->c = swap->c;
 		else
-		{
-			rrr2(swap);
-			mid--;
-		}
-		is_radix2(swap);
+			swap->val2 = swap->val_b2;
 	}
-	calc_tab_distance_a1_2(swap, 0, 1);
-	calc_tab_distance_b1_2(swap, 0, 1);
-	mid = swap->total_distance_a - swap->total_distance_a2;
-	if (mid > 0)
-		swap->point_back += mid;
-	mid = (swap->total_distance_b - swap->total_distance_b2) / 2;
-	if (mid > 0)
-		swap->point_back += mid;
-	write_clone(swap, swap->val_a_last2);
-	is_rr_or_rrr3(swap);
-}
-
-void			is_rr_or_rrr(t_swap *swap)
-{
-	int		mid;
-
-	mid = swap->length_a / 2 + swap->length_a % 2;
-	swap->point_next = 0;
-	swap->point_back = 0;
-	swap->length_a2 = swap->length_a;
-	swap->length_b2 = swap->length_b;
-	while (mid > 0)
-	{
-		if (swap->check_act2 != PB && swap->val_b2 && is_pa2(swap))
-		{
-			pa2(swap);
-			swap->point_next += 2;
-		}
-		else if (swap->check_act2 != PA && is_pb2(swap))
-			swap->point_next += 2;
-		else if (is_ss2(swap))
-			swap->c = swap->c;
-		else if (swap->check_act2 != RB && is_rrb2(swap))
-			swap->c = swap->c;
-		else if (swap->check_act2 != RRB && is_rb2(swap))
-			swap->c = swap->c;
-		else
-		{
-			rr2(swap);
-			mid--;
-		}
-		is_radix2(swap);
-	}
-	calc_tab_distance_a1_2(swap, 0, 1);
-	calc_tab_distance_b1_2(swap, 0, 1);
-	mid = swap->total_distance_a - swap->total_distance_a2;
-	if (mid > 0)
-		swap->point_next += mid;
-	mid = (swap->total_distance_b - swap->total_distance_b2) / 2;
-	if (mid > 0)
-		swap->point_next += mid;
-	write_clone(swap, swap->val_a_last2);
-	is_rr_or_rrr2(swap);
-}
-
-void			algo(t_swap *swap)
-{
-	if (swap->val_a->next->pos_final_sort == 1 && swap->val_a->pos_final != swap->length_a  && is_ss(swap))
-		swap->c = swap->c;
-	else if (swap->check_act != PB && swap->val_b && is_pa(swap))
-	{
-		pa(swap);
-		swap->line = ft_strncpy(swap->line, "pa ", 3);
-	}
-	else if (swap->check_act != PA && is_pb(swap))
-		swap->line = ft_strncpy(swap->line, "pb", 3);
-	else if (test_pile2(swap->sort_final_a, swap->val_a))
-		algo3(swap);
-	else if (is_ss(swap))
-		swap->c = swap->c;
-	else if (swap->check_act != RB && is_rrb(swap))
-		swap->line = ft_strncpy(swap->line, "rrb", 3);
-	else if (swap->check_act != RRB && is_rb(swap))
-		swap->line = ft_strncpy(swap->line, "rb ", 3);
 	else
 	{
-		if (swap->rr == 0 && swap->rrr == 0)
-			is_rr_or_rrr(swap);
-		if (swap->rr > 0)
-		{
-			rr(swap);
-			swap->line = ft_strncpy(swap->line, "rr ", 3);
-			swap->rr--;
-		}
-		else if (swap->rrr > 0)
-		{
-			rrr(swap);
-			swap->line = ft_strncpy(swap->line, "rrr", 3);
-			swap->rrr--;
-		}
+		swap->val = swap->val->next;
+		swap->val_b_last2 = NULL;
+		swap->val_b2 = NULL;
 	}
-	is_radix(swap);
+}
+
+void			write_clone(t_swap *swap, t_val *elem3)
+{
+	swap->val = swap->val_a;
+	swap->val2 = swap->val_a2;
+	swap->elem = NULL;
+	swap->elem2 = NULL;
+	while (swap->val)
+	{
+		write_clone2(swap);
+		if (swap->val == swap->val_a_last)
+			write_clone_2(swap);
+		else if (swap->val2 == swap->val_a_last2)
+		{
+			swap->val2->next = swap->val_b2;
+			swap->val_b2->back = swap->val2;
+			swap->val2 = swap->val2->next;
+			swap->val = swap->val->next;
+		}
+		else
+			write_clone_3(swap);
+	}
+	write_clone_4(swap);
 }

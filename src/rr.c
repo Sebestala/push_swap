@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rr.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/14 17:45:11 by sgarcia           #+#    #+#             */
+/*   Updated: 2019/01/14 17:45:21 by sgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
@@ -42,7 +53,6 @@ void		rb2(t_swap *swap)
 
 	if (swap->val_b2)
 	{
-//printf("TEST45  b = %p   b2 = %p  final = %p   final2 = %p\n\n", swap->val_b, swap->val_b2, swap->val_b_last, swap->val_b_last2);
 		swap->val_b2->back = swap->val_b_last2;
 		swap->val_b_last2->next = swap->val_b2;
 		element1 = swap->val_b2->next;
@@ -71,6 +81,7 @@ void		rb(t_swap *swap)
 	swap->check_act = RB;
 	rb2(swap);
 }
+
 void		rr2(t_swap *swap)
 {
 	ra2(swap);
