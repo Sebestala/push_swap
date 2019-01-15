@@ -6,188 +6,13 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:43:40 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 17:43:42 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:40:30 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void			free_struct2(t_swap *swap)
-{
-	t_val	*elem;
-
-	while (swap->val_b)
-	{
-		elem = swap->val_b;
-		swap->val_b = swap->val_b->next;
-		free(elem);
-	}
-	while (swap->val_b2)
-	{
-		elem = swap->val_b2;
-		swap->val_b2 = swap->val_b2->next;
-		free(elem);
-	}
-	free(swap);
-}
-
-void			free_struct(t_swap *swap)
-{
-	t_val	*elem;
-
-	free(swap->tab_neg1);
-	free(swap->tab_neg2);
-	free(swap->tab_pos1);
-	free(swap->tab_pos2);
-	while (swap->val_a)
-	{
-		elem = swap->val_a;
-		swap->val_a = swap->val_a->next;
-		free(elem);
-	}
-	while (swap->val_a2)
-	{
-		elem = swap->val_a2;
-		swap->val_a2 = swap->val_a2->next;
-		free(elem);
-	}
-	free(swap->tab_distance_a);
-	free(swap->tab_distance_a2);
-	free(swap->tab_distance_b);
-	free(swap->tab_distance_b2);
-	if (swap->line)
-		free(swap->line);
-	free_struct2(swap);
-}
-
-int			test_pile2(t_val *first, t_val *begin)
-{
-	t_val	*val;
-	t_val	*val2;
-
-	val = first;
-	while (val)
-	{
-		val2 = val;
-		val = val->next;
-		if (val && val2->pos_final > val->pos_final)
-			return (FALSE);
-	}
-	val = begin;
-	if (val && val2->pos_final > val->pos_final)
-		return (FALSE);
-	while (val && val != first)
-	{
-//		printf("val = %d   current = %d   final = %d\n", val->val, val->pos_current, val->pos_final);
-		val2 = val;
-		val = val->next;
-		if (val && val != first && val2->pos_final > val->pos_final)
-			return (FALSE);
-	}
-	return (TRUE);
-}
-
-void		test_radix(t_swap *swap, int nb, char c)
-{
-	t_val	*val;
-
-	if (nb == 1 && c == 'a')
-		val = swap->sort_final_a;
-	else if (nb == 1 && c == 'b')
-		val = swap->sort_final_b;
-	else if (nb == 2 && c == 'a')
-		val = swap->sort_final_a2;
-	else if (nb == 2 && c == 'b')
-		val = swap->sort_final_b2;
-	printf("\n");
-	while (val)
-	{
-		printf("RADIX %d%c    val = %d   current = %d   final = %d\n", nb, c, val->val, val->pos_current, val->pos_final);
-		val = val->radix_next;
-	}
-}
-
-void		test_list(t_swap *swap, int nb, char c)
-{
-	t_val	*val;
-	int		i;
-	int		*tab;
-
-	i = 0;
-	if (nb == 1 && c == 'a')
-	{
-		val = swap->val_a;
-		tab = swap->tab_distance_a;
-	}
-	else if (nb == 1 && c == 'b')
-	{
-		val = swap->val_b;
-		tab = swap->tab_distance_b;
-	}
-	else if (nb == 2 && c == 'a')
-	{
-		val = swap->val_a2;
-		tab = swap->tab_distance_a2;
-	}
-	else if (nb == 2 && c == 'b')
-	{
-		val = swap->val_b2;
-		tab = swap->tab_distance_b2;
-	}
-	printf("\n");
-	while (val)
-	{
-		printf("LIST %d%c    val = %d   current = %d   final = %d   sort = %d   Tab[%d] = %d\n", nb, c, val->val, val->pos_current, val->pos_final, val->pos_final_sort, i, tab[i]);
-		val = val->next;
-		i++;
-	}
-}
-
-t_val		*list_copy(t_val *val)
-{
-	t_val	*elem;
-
-	elem = memalloc_sterr(sizeof(t_val), "list_copy");
-	elem->val = val->val;
-	elem->pos_current = val->pos_current;
-	elem->pos_final = val->pos_final;
-	elem->pos_final_sort = val->pos_final_sort;
-	return (elem);
-}
-
-void		init_list_copy(t_swap *swap)
-{
-	t_val	*val;
-	t_val	*elem;
-	t_val	*elem2;
-
-	val = swap->val_a;
-	if (val)
-	{
-		swap->val_a2 = list_copy(val);
-		val = val->next;
-	}
-	elem = swap->val_a2;
-	while (val)
-	{
-		elem2 = list_copy(val);
-		elem->next = elem2;
-		elem2->back = elem;
-		val = val->next;
-		elem = elem2;
-	}
-	swap->val_a_last2 = elem;
-}
-
-int			absolue(int nb)
-{
-	if (nb < 0)
-		return (-nb);
-	else
-		return (nb);
-}
-
-void	make_val_list(t_swap *swap, int nb)
+void		make_val_list(t_swap *swap, int nb)
 {
 	t_val	*val;
 
@@ -206,15 +31,15 @@ void	make_val_list(t_swap *swap, int nb)
 	}
 }
 
-void	check_list_int(t_swap *swap, int ac, char **av, int i)
+void		check_list_int(t_swap *swap, int ac, char **av, int i)
 {
 	int		j;
 
 	j = 0;
 	while (av[i][j])
 	{
-		if ((av[i][j] < '0' || av[i][j] > '9') && av[i][j] != '-'
-&& av[i][j] != '+' && av[i][j] != ' ' && av[i][j] != '\t' && av[i][j] != '\n')
+		if ((av[i][j] < '0' || av[i][j] > '9') && av[i][j] != '-' && av[i][j] !=
+				'+' && av[i][j] != ' ' && av[i][j] != '\t' && av[i][j] != '\n')
 			exit_str("Error : bad input \tcode : 1");
 		if ((av[i][j] == '-' || av[i][j] == '+')
 					&& (av[i][j + 1] < '0' || av[i][j + 1] > '9'))
@@ -223,14 +48,37 @@ void	check_list_int(t_swap *swap, int ac, char **av, int i)
 	}
 }
 
-void	make_tab_list(t_swap *swap, int ac, char **av)
+void		make_tab_list_2(t_swap *swap, int ac, char **av, int i)
+{
+	intmax_t	nb;
+	int			j;
+
+	while (i < ac)
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			check_list_int(swap, ac, av, i);
+			j = 0;
+			nb = atoi_end_index(&av[i]);
+			if (nb < INT_MIN || nb > INT_MAX)
+				exit_str("Error : number too big");
+			make_val_list(swap, nb);
+			while (av[i][j] &&
+					(av[i][j] == ' ' || av[i][j] == '\t' || av[i][j] == '\n'))
+				j++;
+		}
+		i++;
+	}
+	if (!swap->val_a)
+		exit(1);
+}
+
+void		make_tab_list(t_swap *swap, int ac, char **av)
 {
 	int			i;
-	int			j;
-	intmax_t	nb;
 
 	i = 1;
-//printf("AC = %d\n", ac);
 	if (!ft_strcmp(av[i], "-v") && swap->check_visu == 0)
 	{
 		swap->check_visu = 1;
@@ -246,28 +94,10 @@ void	make_tab_list(t_swap *swap, int ac, char **av)
 		swap->check_visu = 2;
 		i++;
 	}
-	while (i < ac)
-	{
-		j = 0;
-		while (av[i][j])
-		{
-//printf("AV[%d][%d] = %c\n", i, j, av[i][j]);
-			check_list_int(swap, ac, av, i);
-			j = 0;
-			nb = atoi_end_index(&av[i]);
-			if (nb < INT_MIN || nb > INT_MAX)
-				exit_str("Error : number too big");
-			make_val_list(swap, nb);
-			while (av[i][j] && (av[i][j] == ' ' || av[i][j] == '\t' || av[i][j] == '\n'))
-				j++;
-		}
-		i++;
-	}
-	if (!swap->val_a)
-		exit(1);
+	make_tab_list_2(swap, ac, av, i);
 }
 
-void	check_val(t_swap *swap, t_val *val, int j, int i)
+void		check_val(t_swap *swap, t_val *val, int j, int i)
 {
 	while (val)
 	{
@@ -280,7 +110,6 @@ void	check_val(t_swap *swap, t_val *val, int j, int i)
 			exit_str("Error : two number too are identical");
 	}
 	swap->nb_numb = j;
-//printf("numb1 = %d TOTAL = %ld  \n", swap->nb_numb, sizeof(int) * j);
 	j++;
 	swap->length_a = swap->nb_numb;
 	swap->tab_distance_a = memalloc_sterr(sizeof(int) * j, "check_val   code1");

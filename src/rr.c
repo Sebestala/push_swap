@@ -6,7 +6,7 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:45:11 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 17:45:21 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:41:14 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,4 @@ void		rr2(t_swap *swap)
 	ra2(swap);
 	rb2(swap);
 	swap->check_act2 = RR;
-}
-
-void		rr(t_swap *swap)
-{
-	ra(swap);
-	rb(swap);
-	swap->check_act = RR;
 }

@@ -6,7 +6,7 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:43:07 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 19:34:10 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 15:51:38 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void		write_clone_4(t_swap *swap)
 	swap->length_a2 = swap->length_a;
 	swap->length_b2 = swap->length_b;
 	swap->check_act2 = swap->check_act;
-	radix2(swap, 'a');
+	radix2(swap, 'a', 0);
 	calc_tab_distance_a1_2(swap, 0, 0);
 	if (swap->val_b2)
 	{
-		radix2(swap, 'b');
+		radix2(swap, 'b', 0);
 		calc_tab_distance_b1_2(swap, 0, 0);
 	}
 }

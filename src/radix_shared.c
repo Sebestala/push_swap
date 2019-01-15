@@ -6,13 +6,13 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:44:20 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 17:44:36 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:27:33 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void		radix_zero(t_swap *swap)
+void			radix_zero(t_swap *swap)
 {
 	int		i;
 
@@ -33,7 +33,7 @@ void		radix_zero(t_swap *swap)
 	}
 }
 
-void		radix_init(t_swap *swap)
+void			radix_init(t_swap *swap)
 {
 	swap->tab_neg1 = memalloc_sterr(sizeof(t_tab), "radix   code : 1");
 	swap->tab_neg2 = memalloc_sterr(sizeof(t_tab), "radix   code : 2");

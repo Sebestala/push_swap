@@ -6,17 +6,14 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:44:02 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 17:44:04 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 15:41:11 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void		pa2(t_swap *swap)
+void		pa2(t_swap *swap, t_val *element1, t_val *element2)
 {
-	t_val	*element1;
-	t_val	*element2;
-
 	if (swap->val_b2)
 	{
 		element1 = swap->val_b2;
@@ -42,11 +39,8 @@ void		pa2(t_swap *swap)
 	swap->check_act2 = PA;
 }
 
-void		pa(t_swap *swap)
+void		pa(t_swap *swap, t_val *element1, t_val *element2)
 {
-	t_val	*element1;
-	t_val	*element2;
-
 	if (swap->val_b)
 	{
 		element1 = swap->val_b;
@@ -70,7 +64,7 @@ void		pa(t_swap *swap)
 		swap->length_a++;
 	}
 	swap->check_act = PA;
-	pa2(swap);
+	pa2(swap, NULL, NULL);
 }
 
 void		pb2(t_swap *swap)

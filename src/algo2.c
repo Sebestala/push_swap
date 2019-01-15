@@ -6,91 +6,11 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:43:15 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 18:22:54 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:48:44 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
-int				is_rrb(t_swap *swap)
-{
-	int res;
-
-	if (swap->val_b && swap->val_b->next)
-	{
-		res = swap->check_act;
-		rrb(swap);
-		calc_tab_distance_b1(swap, 0, 1);
-		if (is_pa(swap))
-			return (TRUE);
-		rb(swap);
-		swap->check_act = res;
-		calc_tab_distance_b1(swap, 0, 1);
-	}
-	return (FALSE);
-}
-
-int				is_rb(t_swap *swap)
-{
-	int res;
-
-	if (swap->val_b && swap->val_b->next)
-	{
-		res = swap->check_act;
-		rb(swap);
-		calc_tab_distance_b1(swap, 0, 1);
-		if (is_pa(swap))
-			return (TRUE);
-		rrb(swap);
-		swap->check_act = res;
-		calc_tab_distance_b1(swap, 0, 1);
-	}
-	return (FALSE);
-}
-
-int				is_rrb2(t_swap *swap)
-{
-	int res;
-
-	if (swap->val_b2 && swap->val_b2->next)
-	{
-		res = swap->check_act2;
-		rrb2(swap);
-		calc_tab_distance_b1_2(swap, 0, 1);
-		if (is_pa2(swap))
-			return (TRUE);
-		rb2(swap);
-		swap->check_act2 = res;
-		calc_tab_distance_b1_2(swap, 0, 1);
-	}
-	return (FALSE);
-}
-
-int				is_rb2(t_swap *swap)
-{
-	int res;
-
-	if (swap->val_b2 && swap->val_b2->next)
-	{
-		res = swap->check_act2;
-		rb2(swap);
-		calc_tab_distance_b1_2(swap, 0, 1);
-		if (is_pa2(swap))
-			return (TRUE);
-		rrb2(swap);
-		swap->check_act2 = res;
-		calc_tab_distance_b1_2(swap, 0, 1);
-	}
-	return (FALSE);
-}
-
-int				is_pb2(t_swap *swap)
-{
-	if (swap->tab_distance_a2[0] < 2)
-		return (FALSE);
-	pb2(swap);
-	return (TRUE);
-}
 
 int				is_pa2(t_swap *swap)
 {
@@ -110,85 +30,11 @@ int				is_pa2(t_swap *swap)
 		pos = swap->length_a2 + 1;
 	if (swap->val_a2->pos_current == 1)
 		i = swap->length_a2 + 1;
-	else 
+	else
 		i = swap->val_a2->pos_current;
 	if (absolue(i - pos) == 0)
 		return (TRUE);
 	return (FALSE);
-}
-
-int				is_ss2(t_swap *swap)
-{
-	int		res;
-	int		res2;
-	int		i;
-
-	i = 0;
-	if (swap->check_act2 != SA && swap->val_a2->next && swap->val_a2->pos_final != swap->length_a2 && swap->val_a2->next->pos_final == 1)
-	{
-		res = swap->total_distance_a2;
-		res2 = swap->check_act2;
-		sa2(swap);
-		radix2(swap, 'a');
-		calc_tab_distance_a1_2(swap, 0, 0);
-		if (res - swap->total_distance_a2 > 0)
-			i++;
-		sa2(swap);
-		radix2(swap, 'a');
-		calc_tab_distance_a1_2(swap, 0, 0);
-		swap->check_act2 = res2;
-	}
-	else if (swap->check_act2 != SA && swap->val_a2->next)
-	{
-		res2 = absolue(swap->val_a2->pos_current - swap->val_a2->next->pos_final);
-		if (res2 > swap->mid_a2)
-			res2 = swap->length_a2 - absolue(swap->val_a2->pos_current - swap->val_a2->next->pos_final);
-		res = res2;
-		res2 = absolue(swap->val_a2->next->pos_current - swap->val_a2->pos_final);
-		if (res2 > swap->mid_a2)
-			res2 = swap->length_a2 - absolue(swap->val_a2->next->pos_current - swap->val_a2->pos_final);
-		res += res2;
-		if ((swap->tab_distance_a2[0] + swap->tab_distance_a2[1]) - res > 0)
-			i++;
-	}
-	if (swap->check_act2 != SA && i < 1 && swap->val_a2 && swap->val_a2->next && swap->val_a2->pos_current != 1  && swap->val_a2->next->pos_current != 1 && swap->val_a2->val < swap->val_a2->next->val && (swap->tab_distance_a2[0] + swap->tab_distance_a2[1]) - res == 0)
-		i ++;
-	if (swap->check_act2 != SB && swap->val_b2 && swap->val_b2->next && swap->val_b2->pos_final != swap->length_b2 && swap->val_b2->next->pos_final == 1)
-	{
-		res = swap->total_distance_b2;
-		res2 = swap->check_act2;
-		sb2(swap);
-		radix2(swap, 'b');
-		calc_tab_distance_b1_2(swap, 0, 0);
-		if (res - swap->total_distance_b2 > 0)
-			i += 5;
-		sb2(swap);
-		radix2(swap, 'b');
-		calc_tab_distance_b1_2(swap, 0, 0);
-		swap->check_act2 = res2;
-	}
-	else if (swap->check_act2 != SB && swap->val_b2 && swap->val_b2->next)
-	{
-		res2 = absolue(swap->val_b2->pos_current - swap->val_b2->next->pos_final);
-		if (res2 > swap->mid_b2)
-			res2 = swap->length_b2 - absolue(swap->val_b2->pos_current - swap->val_b2->next->pos_final);
-		res = res2;
-		res2 = absolue(swap->val_b2->next->pos_current - swap->val_b2->pos_final);
-		if (res2 > swap->mid_b2)
-			res2 = swap->length_b2 - absolue(swap->val_b2->next->pos_current - swap->val_b2->pos_final);
-		res += res2;
-		if ((swap->tab_distance_b2[0] + swap->tab_distance_b2[1]) - res > 0)
-			i += 5;
-	}
-	if (swap->check_act2 != SB && i < 5 && swap->val_b2 && swap->val_b2->next && swap->val_b2->pos_current != 1  && swap->val_b2->next->pos_current != 1 && swap->val_b2->val < swap->val_b2->next->val && (swap->tab_distance_b2[0] + swap->tab_distance_b2[1]) - res == 0)
-		i += 5;
-	if (i == 6)
-		ss2(swap);
-	else if (i == 5)
-		sb2(swap);
-	else if (i == 1)
-		sa2(swap);
-	return (i);
 }
 
 void			do_ss2(t_val *val, int *tab, int len, t_swap *swap)
@@ -218,6 +64,17 @@ void			do_ss2(t_val *val, int *tab, int len, t_swap *swap)
 		tab[i++] = -1;
 }
 
+void			is_radix2_2(t_swap *swap)
+{
+	radix2(swap, 'a', 0);
+	calc_tab_distance_a1_2(swap, 0, 0);
+	if (swap->val_b2)
+	{
+		radix2(swap, 'b', 0);
+		calc_tab_distance_b1_2(swap, 0, 0);
+	}
+}
+
 void			is_radix2(t_swap *swap)
 {
 	if (swap->check_act2 == RR || swap->check_act2 == RRR)
@@ -239,13 +96,5 @@ void			is_radix2(t_swap *swap)
 		do_ss2(swap->val_b2, swap->tab_distance_b2, swap->length_b2, swap);
 	}
 	else
-	{
-		radix2(swap, 'a');
-		calc_tab_distance_a1_2(swap, 0, 0);
-		if (swap->val_b2)
-		{
-			radix2(swap, 'b');
-			calc_tab_distance_b1_2(swap, 0, 0);
-		}
-	}
+		is_radix2_2(swap);
 }

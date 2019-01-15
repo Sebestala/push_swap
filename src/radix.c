@@ -6,7 +6,7 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:44:08 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 17:44:10 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:27:15 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		radix_merge(t_tab *tab1, t_tab *tab2, t_swap *swap, char c)
 		element->radix_back = NULL;
 }
 
-static void		radix_sort_pos_and_neg(t_swap *swap, char c)
+static void		radix_sort_pos_and_neg(t_swap *swap, char c, int *i)
 {
 	t_val	*val;
 
@@ -56,6 +56,11 @@ static void		radix_sort_pos_and_neg(t_swap *swap, char c)
 		else
 			radix_put_val_at_end_list(val, swap->tab_pos1->tab, val->val % 10);
 		val = val->next;
+	}
+	while (swap->smallest != 0)
+	{
+		swap->smallest /= 10;
+		(*i)++;
 	}
 }
 
@@ -106,18 +111,10 @@ static void		make_pos_final(t_swap *swap, char c)
 	}
 }
 
-void		radix(t_swap *swap, char c)
+void			radix(t_swap *swap, char c, int i)
 {
-	int		i;
-
-	i = 0;
 	radix_zero(swap);
-	radix_sort_pos_and_neg(swap, c);
-	while (swap->smallest != 0)
-	{
-		swap->smallest /= 10;
-		i++;
-	}
+	radix_sort_pos_and_neg(swap, c, &i);
 	radix_sort_algo(swap->tab_neg1, swap->tab_neg2, i);
 	i = 0;
 	while (swap->biggest > 0)

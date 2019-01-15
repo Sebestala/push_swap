@@ -6,7 +6,7 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:37:59 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 19:21:21 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:15:57 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ typedef	struct		s_swap
 	int				c;
 }					t_swap;
 
-void				pa(t_swap *swap);
+void				pa(t_swap *swap, t_val *element1, t_val *element2);
 void				pb(t_swap *swap);
 void				sa(t_swap *swap);
 void				sb(t_swap *swap);
@@ -145,7 +145,7 @@ void				rr(t_swap *swap);
 void				rra(t_swap *swap);
 void				rrb(t_swap *swap);
 void				rrr(t_swap *swap);
-void				pa2(t_swap *swap);
+void				pa2(t_swap *swap, t_val *element1, t_val *element2);
 void				pb2(t_swap *swap);
 void				sa2(t_swap *swap);
 void				sb2(t_swap *swap);
@@ -157,7 +157,7 @@ void				rra2(t_swap *swap);
 int					test_pile(t_val *val);
 void				rrb2(t_swap *swap);
 void				rrr2(t_swap *swap);
-void				radix(t_swap *swap, char c);
+void				radix(t_swap *swap, char c, int i);
 void				print_visu(t_swap *swap);
 void				print_visu_ps(t_swap *swap);
 void				esc_visu(t_swap *swap, int i);
@@ -183,7 +183,7 @@ void				algo_part1(t_swap *swap);
 void				algo_part2(t_swap *swap);
 void				radix_sort_algo(t_tab *tab1, t_tab *tab2, int size);
 void				radix_put_val_at_end_list(t_val *val, void **tab, int nb);
-void				radix2(t_swap *swap, char c);
+void				radix2(t_swap *swap, char c, int i);
 void				calc_tab_distance_b1(t_swap *swap, int i, int check);
 void				calc_tab_distance_a1(t_swap *swap, int i, int check);
 void				calc_tab_distance_b1_2(t_swap *swap, int i, int check);
@@ -195,7 +195,7 @@ void				test_radix(t_swap *swap, int nb, char c);
 int					test_pile2(t_val *first, t_val *begin);
 int					is_pa2(t_swap *swap);
 int					is_pb2(t_swap *swap);
-int					is_ss2(t_swap *swap);
+int					is_ss2(t_swap *swap, int res, int res2, int i);
 void				do_ss(t_val *val, int *tab, int len, t_swap *swap);
 void				is_radix2(t_swap *swap);
 int					is_rrb2(t_swap *swap);
@@ -216,5 +216,11 @@ void				find_ra_rrb(t_swap *swap, t_val *el, t_val *el2,
 void				find_ra_rb(t_swap *swap, t_val *el, t_val *el2,
 		t_val *back);
 void				clean_result(t_swap *swap);
+int					is_ss_6(t_swap *swap, int i);
+int					is_ss_5(t_swap *swap, int i, int *res, int res2);
+int					is_ss_4(t_swap *swap, int i, int *res, int res2);
+int					is_pb(t_swap *swap);
+int					is_ss(t_swap *swap);
+void				is_rr_or_rrr(t_swap *swap);
 
 #endif

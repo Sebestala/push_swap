@@ -6,13 +6,13 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:43:23 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 18:09:44 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 15:52:17 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-	void		clean_result(t_swap *swap)
+void			clean_result(t_swap *swap)
 {
 	swap->ra = 0;
 	swap->rb = 0;

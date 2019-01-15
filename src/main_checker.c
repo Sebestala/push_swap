@@ -6,7 +6,7 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:43:47 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 17:43:51 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 20:24:39 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		list_is_valid(t_swap *swap)
 	{
 		esc_visu(swap, 1);
 		ft_putendl("KO");
-		return;
+		return ;
 	}
 	element = swap->val_a;
 	while (element)
@@ -63,7 +63,7 @@ void			command(t_swap *swap)
 	else if (!ft_strcmp(swap->line, "sb"))
 		sb(swap);
 	else if (!ft_strcmp(swap->line, "pa"))
-		pa(swap);
+		pa(swap, NULL, NULL);
 	else if (!ft_strcmp(swap->line, "pb"))
 		pb(swap);
 	else if (!ft_strcmp(swap->line, "ra"))
@@ -78,7 +78,7 @@ void			command(t_swap *swap)
 		command2(swap);
 }
 
-int		main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	t_swap	*swap;
 	int		i;
@@ -88,7 +88,7 @@ int		main(int ac, char **av)
 	swap = memalloc_sterr(sizeof(t_swap), "main");
 	make_tab_list(swap, ac, av);
 	radix_init(swap);
-	radix(swap, 'a');
+	radix(swap, 'a', 0);
 	check_val(swap, swap->sort_final_a, 0, 0);
 	init_list_copy(swap);
 	if (swap->check_visu > 0)

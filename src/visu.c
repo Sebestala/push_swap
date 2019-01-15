@@ -6,7 +6,7 @@
 /*   By: sgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 17:45:46 by sgarcia           #+#    #+#             */
-/*   Updated: 2019/01/14 17:45:47 by sgarcia          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:27:52 by sgarcia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void			init_windows(t_swap *swap)
 	getch();
 	mvprintw(swap->axe_x - 3, 105, "Move : %4d", swap->nb_move);
 	mvprintw(swap->axe_x - 3, 60, "Write 'esc' for valid and escape.");
-	mvprintw(swap->axe_x - 3, 125, "Commands : pa pb sa sb ss ra rb rr rra rrb rrr");
+	mvprintw(swap->axe_x - 3, 125,
+			"Commands : pa pb sa sb ss ra rb rr rra rrb rrr");
 	getch();
 }
 

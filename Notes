@@ -1,5 +1,26 @@
 HOW TO USE
 
-Checker part:
+Command for create a list :
+	ARG=`ruby -e "puts (-500..500).to_a.shuffle.join(' ')"`
 
+Commands : sa sb ss ra rb rr rra rrb rrr pa pb
 
+Options :
+	-v : visual
+	-s : speed, only move's number
+	-vs: visual more speeder
+
+Checker part :
+	./checker &ARG
+	./checker "12  20 456 -98 0" 120 65
+	./checker -v "456 21 555 20 -65 +65
+
+Push_swap part :
+	./push_swap &ARG
+	./push_swap "12  20 456 -98 0" 120 65
+	./push_swap -s "12  20 456 -98 0" 120 65
+	./push_swap -v "12  20 456 -98 0" 120 65
+	./push_swap -vs "12  20 456 -98 0" 120 65
+
+You may also use "./push_swap &ARG | ./checker &ARG" for find and check the
+answer but Options (-s -v -vs) are forbiden.
